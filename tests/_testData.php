@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Contains single instance of a grocery item
+ */
 class GroceryItem {
 
     public $id;
@@ -13,6 +16,9 @@ class GroceryItem {
     }
 }
 
+/**
+ * Defines the type of grocery item
+ */
 class GroceryType {
 
     public $id;
@@ -24,8 +30,16 @@ class GroceryType {
     }
 }
 
+/**
+ * Collection of methods used in testing
+ * Assembles data ready for testing based
+ * on groceries etc
+ */
 class TestData {
 
+  /**
+   * @return Array of GroceryItem object instances
+   */
   public static function getItems()
   {
     $items = [];
@@ -43,12 +57,45 @@ class TestData {
 
     return $items;
   }
-}
-$groceryTypes = [];
-$types = [1 => 'Fruit', 2 => 'Veg', 3 => 'Fish', 4 => 'Tinned Veg', 5 => 'Sauces', 6 => 'Drinks'];
-foreach ($types as $id => $name) {
-    $type = new GroceryType($id, $name);
-    $groceryTypes[] = $type;
-}
 
-$groceryTypes = new ResultSet($groceryTypes);
+  /**
+   * @return Array of GroceryType object instances
+   */
+  public static function getGroceryTypes()
+  {
+    $groceryTypes = [];
+    $types = [1 => 'Fruit', 2 => 'Veg', 3 => 'Fish', 4 => 'Tinned Veg', 5 => 'Sauces', 6 => 'Drinks'];
+    foreach ($types as $id => $name) {
+        $type = new GroceryType($id, $name);
+        $groceryTypes[] = $type;
+    }
+
+    $groceryTypes = $groceryTypes;
+
+    return $groceryTypes;
+  }
+
+  /**
+   * @return Array of GroceryType object instances joined with GroceryItems
+   */
+  public static function getGroceryList()
+  {
+
+    $groceryTypes = TestData::getGroceryTypes();
+    $items = TestData::getItems();
+
+    foreach ($groceryTypes as $type) {
+      $list = [];
+
+      foreach ($items as $item) {
+        if ($item->typeId == $type->id) {
+          $list[] = $item;
+        }
+      }
+
+      $type->items = $list;
+    }
+
+    return $groceryTypes;
+  }
+}
