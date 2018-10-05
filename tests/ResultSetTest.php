@@ -156,4 +156,15 @@ class ResultSetTest extends TestCase {
     $this->assertEquals(count($result), 2);
     $this->assertEquals($result[1]->name, 'Kipper');
   }
+
+  public function testLikeChildReturnsItemsWithChildrenMatchingArgument()
+  {
+    $groceryList = TestData::getGroceryList();
+    $groceryListRs = new ResultSet($groceryList);
+    $result = $groceryListRs->likeChild('items', ['name' => 'pp']);
+
+    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertEquals(count($result), 3);
+    $this->assertEquals($result[1]->name, 'Veg');
+  }
 }

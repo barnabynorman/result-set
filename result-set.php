@@ -188,31 +188,32 @@ class ResultSet extends ArrayObject {
     return new ResultSet($results);
   }
 
-    /**
-     * Matches elements where field contains value from child array / ResultSet
-     *
-     * @param String $fieldName in each element to filter by
-     * @param Array of clauses
-     *
-     * @return ResultSet
-     */
-    public function likeChild($fieldName, $clauses)
-    {
-        $results = [];
+  /**
+   * Matches elements where field contains value from child array / ResultSet
+   *
+   * @param String $fieldName in each element to filter by
+   * @param Array of clauses
+   *
+   * @return ResultSet
+   */
+  public function likeChild($fieldName, $clauses)
+  {
+    $results = [];
 
-        foreach ($clauses as $field => $value) {
+    foreach ($clauses as $field => $value) {
+      foreach($this as $key => $item) {
+        $fieldValue = static::getItemFieldValue($item, $fieldName);
+        $fieldValueRs = ResultSet::getInstance($fieldValue);
+        $found = $fieldValueRs->like([$field => $value]);
 
-            $iterator = $this->getIterator();
-            foreach($iterator as $key => $item) {
-                $found = $item->$fieldName->like([$field => $value]);
-                if ($found->count() > 0) {
-                    $results[] = $item;
-                }
-            }
+        if ($found->count() > 0) {
+          $results[] = $item;
         }
-
-        return new ResultSet($results);
+      }
     }
+
+    return new ResultSet($results);
+  }
 
     /**
      * Similare to where() but each tested field must
