@@ -114,34 +114,30 @@ class ResultSet extends ArrayObject {
     return new ResultSet($results);
   }
 
-    /**
-     * Filter ResultSet by array or ResultSet of a child field
-     *
-     * @param String $fieldName in each element to filter by
-     * @param Array of clauses
-     *
-     * @return ResultSet
-     */
-    public function whereChild($fieldName, $clauses)
-    {
-        $results = [];
+  /**
+   * Filter ResultSet by array or ResultSet of a child field
+   *
+   * @param String $fieldName in each element to filter by
+   * @param Array of clauses
+   *
+   * @return ResultSet
+   */
+  public function whereChild($fieldName, $clauses)
+  {
+    $results = [];
 
-        // $whereValue = reset($clauses);
-        // $whereField = key($clauses);
-
-        // $iterator = $this->getIterator();
-        foreach($this as $item) {
-            if (isset($item->$fieldName)) {
-                $testSet = new ResultSet($item->$fieldName);
-                $testResult = $testSet->where($clauses);
-                if ($testResult->count() > 0) {
-                    $results[] = $item;
-                }
-            }
+    foreach($this as $item) {
+      if (isset($item->$fieldName)) {
+        $testSet = new ResultSet($item->$fieldName);
+        $testResult = $testSet->where($clauses);
+        if ($testResult->count() > 0) {
+          $results[] = $item;
         }
-
-        return new ResultSet($results);
+      }
     }
+
+    return new ResultSet($results);
+  }
 
     /**
      * Matches elements where field contains value
