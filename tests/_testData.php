@@ -98,4 +98,20 @@ class TestData {
 
     return $groceryTypes;
   }
+
+  public static function getItemsWithTypeField()
+  {
+    $items = TestData::getItems();
+    $groceryTypes = TestData::getGroceryTypes();
+
+    foreach ($items as $i) {
+      foreach ($groceryTypes as $type) {
+        if ($i->typeId == $type->id) {
+          $i->type = $type->name;
+        }
+      }
+    }
+
+    return $items;
+  }
 }

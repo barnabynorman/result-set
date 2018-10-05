@@ -102,4 +102,45 @@ class ResultSetTest extends TestCase {
     $this->assertEquals(count($result[0]->items), 3);
     $this->assertEquals($result[0]->items[2]->name, 'Celery');
   }
+
+  public function testLikeReturnsResultSetWithTwoResultsForAto()
+  {
+    $items = TestData::getItems();
+    $itemsRs = new ResultSet($items);
+    $result = $itemsRs->like(['name' => 'ato']);
+
+    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertEquals(count($result), 2);
+    $this->assertEquals($result[0]->name, 'Potato');
+    $this->assertEquals($result[1]->name, 'Tomato');
+  }
+
+  public function testLikeReturnsResultSetWithExpectedNoOfResultsForTwoConditionsWithNoDuplicates()
+  {
+    $items = TestData::getItemsWithTypeField();
+    $itemsRs = new ResultSet($items);
+    $result = $itemsRs->like(['name' => 'ato', 'type' => 'Fruit']);
+
+    $tomCount = 0;
+    foreach ($result as $item) {
+      if ($item->name == 'Tomato') {
+        $tomCount++;
+      }
+    }
+
+    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertEquals(count($result), 5);
+    $this->assertEquals($result[2]->type, 'Fruit');
+    $this->assertEquals($tomCount, 1);
+  }
+
+  public function testLikeReturnsEmptyResultSetWhenPassedEmptyTestValue()
+  {
+    $items = TestData::getItems();
+    $itemsRs = new ResultSet($items);
+    $result = $itemsRs->like(['name' => '']);
+
+    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertEquals(count($result), 0);
+  }
 }

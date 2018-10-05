@@ -148,25 +148,19 @@ class ResultSet extends ArrayObject {
      */
     public function like($clauses)
     {
-        $results = [];
+      $results = [];
 
-        foreach ($clauses as $field => $value) {
+      foreach ($clauses as $field => $value) {
+        foreach($this as $key => $item) {
+          $fieldValue = static::getItemFieldValue($item, $field);
 
-            $iterator = $this->getIterator();
-            foreach($iterator as $key => $item) {
-                if (is_array($item)) {
-                    $testVal = $item[$field];
-                } else {
-                    $testVal = $item->$field;
-                }
-
-                if (strpos($testVal, $value) !== FALSE) {
-                    $results[] = $item;
-                }
-            }
+          if ((strlen($value)) && (strpos($fieldValue, $value) !== FALSE)) {
+            $results[$key] = $item;
+          }
         }
+      }
 
-        return new ResultSet($results);
+      return new ResultSet(array_values($results));
     }
 
     /**
