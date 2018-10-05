@@ -576,4 +576,15 @@ class ResultSet extends ArrayObject {
         $item->$method();
       }
     }
+
+    protected static function getItemFieldValue($item, $field)
+    {
+      if ((is_array($item)) && (isset($item[$field]))) {
+        return $item[$field];
+      } elseif (isset($item->$field)) {
+        return $item->$field;
+      }
+
+      return FALSE;
+    }
 }
