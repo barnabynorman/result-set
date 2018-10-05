@@ -1,0 +1,7 @@
+{
+  "name": "barnabynorman/result-set",
+  "description": "Manage collections of items with filters and utilities",
+  "require": {
+    "php": "^7.0"
+  }
+}
