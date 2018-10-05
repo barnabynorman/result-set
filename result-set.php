@@ -139,59 +139,54 @@ class ResultSet extends ArrayObject {
     return new ResultSet($results);
   }
 
-    /**
-     * Matches elements where field contains value
-     *
-     * @param Array of clauses
-     *
-     * @return ResultSet
-     */
-    public function like($clauses)
-    {
-      $results = [];
+  /**
+   * Matches elements where field contains value
+   *
+   * @param Array of clauses
+   *
+   * @return ResultSet
+   */
+  public function like($clauses)
+  {
+    $results = [];
 
-      foreach ($clauses as $field => $value) {
-        foreach($this as $key => $item) {
-          $fieldValue = static::getItemFieldValue($item, $field);
+    foreach ($clauses as $field => $value) {
+      foreach($this as $key => $item) {
+        $fieldValue = static::getItemFieldValue($item, $field);
 
-          if ((strlen($value)) && (strpos($fieldValue, $value) !== FALSE)) {
-            $results[$key] = $item;
-          }
+        if ((strlen($value)) && (stripos($fieldValue, $value) !== FALSE)) {
+          $results[$key] = $item;
         }
       }
-
-      return new ResultSet(array_values($results));
     }
 
-    /**
-     * Similar to like() but looks for match from these items to value passed
-     *
-     * @param Array of clauses
-     *
-     * @return ResultSet
-     */
-    public function ekil($clauses)
-    {
-        $results = [];
+    return new ResultSet(array_values($results));
+  }
 
-        foreach ($clauses as $field => $value) {
+  /**
+   * Backwards like
+   * Similar to like() but looks for match from items in value passed
+   *
+   * @param Array of clauses
+   *
+   * @return ResultSet
+   */
+  public function ekil($clauses)
+  {
+    $results = [];
 
-            $iterator = $this->getIterator();
-            foreach($iterator as $key => $item) {
-                if (is_array($item)) {
-                    $testVal = $item[$field];
-                } else {
-                    $testVal = $item->$field;
-                }
+    foreach ($clauses as $field => $value) {
+      foreach($this as $key => $item) {
+        $fieldValue = static::getItemFieldValue($item, $field);
 
-                if (strpos($value, $testVal) !== FALSE) {
-                    $results[] = $item;
-                }
-            }
+        if ((strlen($value)) && (stripos($value, $fieldValue) !== FALSE)) {
+          $results[] = $item;
         }
-
-        return new ResultSet($results);
+      }
     }
+
+    return new ResultSet($results);
+  }
 
     /**
      * Matches elements where field contains value from child array / ResultSet
