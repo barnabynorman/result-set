@@ -215,67 +215,53 @@ class ResultSet extends ArrayObject {
     return new ResultSet($results);
   }
 
-    /**
-     * Similare to where() but each tested field must
-     * be greater than the value saught
-     *
-     * @param Array of clauses
-     *
-     * @return ResultSet
-     */
-    public function greaterThan($clauses)
-    {
-        $results = [];
+  /**
+   * Similare to where() but each tested field must
+   * be greater than the value saught
+   *
+   * @param Array of clauses
+   *
+   * @return ResultSet
+   */
+  public function greaterThan($clauses)
+  {
+    $results = [];
 
-        foreach ($clauses as $field => $value) {
-
-            $iterator = $this->getIterator();
-            foreach($iterator as $item) {
-                if (is_array($item)) {
-                    if ($item[$field] > $value) {
-                        $results[] = $item;
-                    }
-                } elseif (isset($item->$field)) {
-                    if ($item->$field > $value) {
-                        $results[] = $item;
-                    }
-                }
-            }
+    foreach ($clauses as $fieldName => $value) {
+      foreach($this as $item) {
+        $fieldValue = static::getItemFieldValue($item, $fieldName);
+        if ($fieldValue > $value) {
+            $results[] = $item;
         }
-
-        return new ResultSet($results);
+      }
     }
 
-    /**
-    * Similare to where() but each tested field must
-     * be less than the value saught
-     *
-     * @param Array of clauses
-     *
-     * @return ResultSet
-     */
-    public function lessThan($clauses)
-    {
-        $results = [];
+    return new ResultSet($results);
+  }
 
-        foreach ($clauses as $field => $value) {
+  /**
+  * Similare to where() but each tested field must
+  * be less than the value saught
+  *
+  * @param Array of clauses
+  *
+  * @return ResultSet
+  */
+  public function lessThan($clauses)
+  {
+    $results = [];
 
-            $iterator = $this->getIterator();
-            foreach($iterator as $item) {
-                if (is_array($item)) {
-                    if ($item[$field] < $value) {
-                        $results[] = $item;
-                    }
-                } elseif (isset($item->$field)) {
-                    if ($item->$field < $value) {
-                        $results[] = $item;
-                    }
-                }
-            }
+    foreach ($clauses as $fieldName => $value) {
+      foreach($this as $item) {
+        $fieldValue = static::getItemFieldValue($item, $fieldName);
+        if ($fieldValue < $value) {
+            $results[] = $item;
         }
-
-        return new ResultSet($results);
+      }
     }
+
+    return new ResultSet($results);
+  }
 
     /**
      * Searches all fields in all elements

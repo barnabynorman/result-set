@@ -167,4 +167,28 @@ class ResultSetTest extends TestCase {
     $this->assertEquals(count($result), 3);
     $this->assertEquals($result[1]->name, 'Veg');
   }
+
+  public function testGreaterThanReturnsAllItemsGreaterThanPassed()
+  {
+    $items = TestData::getItems();
+    $itemsRs = new ResultSet($items);
+
+    $result = $itemsRs->greaterThan(['typeId' => 2]);
+
+    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertEquals(count($result), 4);
+    $this->assertEquals($result[2]->name, 'Ketchup');
+  }
+
+  public function testLessThanReturnsAllItemsLessThanPassed()
+  {
+    $items = TestData::getItems();
+    $itemsRs = new ResultSet($items);
+
+    $result = $itemsRs->lessThan(['typeId' => 2]);
+
+    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertEquals(count($result), 4);
+    $this->assertEquals($result[2]->name, 'Pair');
+  }
 }
