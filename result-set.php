@@ -384,6 +384,33 @@ class ResultSet extends ArrayObject {
     }
 
     /**
+     * Filters the contained objects to only return
+     * the specified fields as a ResultSet of Arrays
+     * containing the fields and their values
+     *
+     * ?? Should this be done with a map by calling code?
+     *
+     * @param Array of fields to return
+     *
+     * @return ResultSet
+     */
+    public function fields($fieldNames = [])
+    {
+      $results = [];
+
+      foreach($this as $key => $item) {
+        $justFieldsItem = [];
+        foreach($fieldNames as $field) {
+          $fieldValue = static::getItemFieldValue($item, $field);
+          $justFieldsItem[$field] = $fieldValue;
+        }
+        $results[] = new ResultSet($justFieldsItem);
+      }
+
+      return new ResultSet($results);
+    }
+
+    /**
      * Joins an additional ResultSet / array to existing
      * ResultSet by fieldname and indexes
      *
