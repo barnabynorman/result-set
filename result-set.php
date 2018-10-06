@@ -349,18 +349,16 @@ class ResultSet extends ArrayObject {
      *
      * @return ResultSet
      */
-    public function groupBy($group)
+    public function groupBy($field)
     {
-        $results = [];
+      $results = [];
 
-        $iterator = $this->getIterator();
-        foreach($iterator as $key => $item) {
-            if (strlen($item->$group) > 0) {
-                $results[$item->$group][] = $item;
-            }
-        }
+      foreach($this as $key => $item) {
+        $fieldValue = static::getItemFieldValue($item, $field);
+        $results[$fieldValue][] = $item;
+      }
 
-        return new ResultSet($results);
+      return new ResultSet($results);
     }
 
     /**
@@ -569,12 +567,12 @@ class ResultSet extends ArrayObject {
 
     protected static function getItemFieldValue($item, $field)
     {
-      if ((is_array($item)) && (isset($item[$field]))) {
+      if (((is_array($item)) || (is_subclass_of($item, 'ArrayObject'))) && (isset($item[$field]))) {
         return $item[$field];
       } elseif (isset($item->$field)) {
         return $item->$field;
       }
 
-      return FALSE;
+      return NULL;
     }
 }
