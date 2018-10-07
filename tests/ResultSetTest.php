@@ -50,7 +50,7 @@ class ResultSetTest extends TestCase {
     $result = $itemsRs->where(['id' => 3]);
     $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
     $this->assertEquals(count($result), 1);
-    $this->assertEquals($result[0]->name, 'Pair');
+    $this->assertEquals($result[0]->name, 'Pear');
 
     $result = $itemsRs->where(['name' => 'Apple']);
     $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
@@ -87,7 +87,7 @@ class ResultSetTest extends TestCase {
     $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
     $this->assertEquals(count($result), 3);
     $this->assertEquals($result[0]->name, 'Orange');
-    $this->assertEquals($result[1]->name, 'Pair');
+    $this->assertEquals($result[1]->name, 'Pear');
     $this->assertEquals($result[2]->name, 'Pepper');
   }
 
@@ -189,6 +189,6 @@ class ResultSetTest extends TestCase {
 
     $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
     $this->assertEquals(count($result), 4);
-    $this->assertEquals($result[2]->name, 'Pair');
+    $this->assertEquals($result[2]->name, 'Pear');
   }
 }

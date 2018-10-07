@@ -45,7 +45,7 @@ class TestData {
     $items = [];
     $items[] = new GroceryItem(1, 'Orange', 1);
     $items[] = new GroceryItem(2, 'Apple', 1);
-    $items[] = new GroceryItem(3, 'Pair', 1);
+    $items[] = new GroceryItem(3, 'Pear', 1);
     $items[] = new GroceryItem(4, 'Potato', 2);
     $items[] = new GroceryItem(5, 'Pepper', 2);
     $items[] = new GroceryItem(6, 'Tomato', 1);
