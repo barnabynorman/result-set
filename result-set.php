@@ -216,6 +216,26 @@ class ResultSet extends ArrayObject {
   }
 
   /**
+   * Matches elements by key
+   *
+   * @param String $searchKey to match
+   *
+   * @return ResultSet
+   */
+  public function keyLike($searchKey)
+  {
+    $results = [];
+
+    foreach($this as $key => $item) {
+      if (stripos($key, $searchKey) !== FALSE) {
+        $results[$key] = $item;
+      }
+    }
+
+    return new ResultSet(array_values($results));
+  }
+
+  /**
    * Similare to where() but each tested field must
    * be greater than the value saught
    *
