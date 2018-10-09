@@ -631,4 +631,11 @@ class ResultSet extends ArrayObject {
 
       return NULL;
     }
+
+    public function sort($comparisonFunction)
+    {
+      $this->uasort($comparisonFunction);
+        return $this;
+    }
+
 }
