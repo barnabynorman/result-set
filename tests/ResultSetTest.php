@@ -213,4 +213,16 @@ class ResultSetTest extends TestCase {
     $this->assertTrue(is_subclass_of($result2, 'ArrayObject'));
     $this->assertEquals(count($result2), 0);
   }
+
+  public function testGroupByChildFieldReturnsGroupedResultBasedOnChildField()
+  {
+    $groceryList = TestData::getItemsWithTypeFieldJoined();
+    $groceryListRs = new ResultSet($groceryList);
+
+    $result = $groceryListRs->groupByChildField('type', 'name');
+
+    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertEquals(count($result), 6);
+    $this->assertEquals(count($result['Veg']), 3);
+  }
 }

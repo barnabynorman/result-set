@@ -368,6 +368,29 @@ class ResultSet extends ArrayObject {
     }
 
     /**
+     * Groups data into ResultSet based on
+     * child group field specified
+     * The child field must contain a key => value
+     * to resolve the grouping
+     *
+     * @param String Field name to group by
+     *
+     * @return ResultSet
+     */
+    public function groupByChildField($field, $childField)
+    {
+      $results = [];
+
+      foreach($this as $key => $item) {
+        $child = static::getItemFieldValue($item, $field);
+        $fieldValue = static::getItemFieldValue($child, $childField);
+        $results[$fieldValue][] = $item;
+      }
+
+      return new ResultSet($results);
+    }
+
+    /**
      * Filters the contained objects to only return
      * the specified field
      *
