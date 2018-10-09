@@ -114,4 +114,20 @@ class TestData {
 
     return $items;
   }
+
+  public static function getItemsWithTypeFieldJoined()
+  {
+    $items = TestData::getItems();
+    $groceryTypes = TestData::getGroceryTypes();
+
+    foreach ($items as $i) {
+      foreach ($groceryTypes as $type) {
+        if ($i->typeId == $type->id) {
+          $i->type = $type;
+        }
+      }
+    }
+
+    return $items;
+  }
 }
