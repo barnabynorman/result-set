@@ -283,40 +283,33 @@ class ResultSet extends ArrayObject {
     return new ResultSet($results);
   }
 
-    /**
-     * Searches all fields in all elements
-     *
-     * @param String phrase to search for
-     *
-     * @return ResultSet
-     */
-    public function search($searchPhrase)
-    {
-        $results = [];
+  /**
+   * Searches all fields in all elements
+   *
+   * @param String phrase to search for
+   *
+   * @return ResultSet
+   */
+  public function search($searchPhrase)
+  {
+    $results = [];
 
-        $iterator = $this->getIterator();
-        foreach($iterator as $item) {
-            if(!(is_array($item))) {
-                $row = $item->toArray();
-            }
-
-            foreach ($row as $col) {
-                if (is_array($col)) {
-                    $colRs = new ResultSet($col);
-                    $childSearch = $colRs->search($searchPhrase);
-                    if (count($childSearch) > 0) {
-                        $results[] = $item;
-                    }
-                } else {
-                    if (stripos($col, $searchPhrase) !== FALSE) {
-                        $results[] = $item;
-                    }
-                }
-            }
+    foreach($this as $item) {
+      if (is_scalar($item)) {
+        if ((stripos($item, $searchPhrase) !== FALSE) || ($item == $searchPhrase)) {
+          $results[] = $item;
         }
-
-        return new ResultSet($results);
+      } else {
+        $itemRs = new ResultSet($item);
+        $childSearch = $itemRs->search($searchPhrase);
+        if (count($childSearch) > 0) {
+          $results[] = $item;
+        }
+      }
     }
+
+    return new ResultSet($results);
+  }
 
     /**
      * Returns the ResultSet ordered by $order and

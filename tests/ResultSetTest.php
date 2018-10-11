@@ -168,6 +168,28 @@ class ResultSetTest extends TestCase {
     $this->assertEquals($result[1]->name, 'Veg');
   }
 
+  public function testKeyLikeMatchesKeyInArgument()
+  {
+    $groceryList = TestData::getGroceryList();
+    $groceryListRs = new ResultSet($groceryList);
+
+    $gList = [];
+    foreach ($groceryListRs as $items) {
+      $type = $items->name;
+      $gList[$type] = $items;
+    }
+    $gListRs = new ResultSet($gList);
+
+    $result = $gListRs->keyLike('Drinks');
+
+    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertEquals(count($result), 1);
+
+    $result2 = $gListRs->keyLike('Bob');
+    $this->assertTrue(is_subclass_of($result2, 'ArrayObject'));
+    $this->assertEquals(count($result2), 0);
+  }
+
   public function testGreaterThanReturnsAllItemsGreaterThanPassed()
   {
     $items = TestData::getItems();
@@ -192,27 +214,42 @@ class ResultSetTest extends TestCase {
     $this->assertEquals($result[2]->name, 'Pear');
   }
 
-  public function testKeyLikeMatchesKeyInArgument()
+  public function testSearchReturnsValuesFromAShallowSearch()
   {
-    $groceryList = TestData::getGroceryList();
+    $groceryList = TestData::getItemsWithTypeFieldJoined();
     $groceryListRs = new ResultSet($groceryList);
 
-    $gList = [];
-    foreach ($groceryListRs as $items) {
-      $type = $items->name;
-      $gList[$type] = $items;
-    }
-    $gListRs = new ResultSet($gList);
-
-    $result = $gListRs->keyLike('Drinks');
+    $result = $groceryListRs->search('Beer');
 
     $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
     $this->assertEquals(count($result), 1);
-
-    $result2 = $gListRs->keyLike('Bob');
-    $this->assertTrue(is_subclass_of($result2, 'ArrayObject'));
-    $this->assertEquals(count($result2), 0);
+    $this->assertEquals($result[0]->name, 'Beer');
   }
+
+  public function testSearchReturnsValuesFromADeepSearch()
+  {
+    $groceryList = TestData::getItemsWithTypeFieldJoined();
+    $groceryListRs = new ResultSet($groceryList);
+
+    $result = $groceryListRs->search('Tinned');
+
+    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertEquals(count($result), 1);
+    $this->assertEquals($result[0]->name, 'Baked beans');
+  }
+
+  public function testSearchReturnsValuesFromACaseInsensitiveSearch()
+  {
+    $groceryList = TestData::getItemsWithTypeFieldJoined();
+    $groceryListRs = new ResultSet($groceryList);
+
+    $result = $groceryListRs->search('beer');
+
+    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertEquals(count($result), 1);
+    $this->assertEquals($result[0]->name, 'Beer');
+  }
+
 
   public function testGroupByChildFieldReturnsGroupedResultBasedOnChildField()
   {
