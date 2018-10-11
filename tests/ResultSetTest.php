@@ -319,4 +319,15 @@ class ResultSetTest extends TestCase {
     $this->assertEquals(count($result), 6);
     $this->assertEquals(count($result['Veg']), 3);
   }
+
+  public function testFieldReturnsOnlySingleFieldsFromResultSet()
+  {
+    $people = TestData::getPeople();
+    $peopleRs = new ResultSet($people);
+
+    $result = $peopleRs->field('lastname');
+
+    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertEquals(count($result), 14);
+  }
 }

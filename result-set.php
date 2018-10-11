@@ -365,50 +365,50 @@ class ResultSet extends ArrayObject {
     return new ResultSet($results);
   }
 
-    /**
-     * Groups data into ResultSet based on
-     * child group field specified
-     * The child field must contain a key => value
-     * to resolve the grouping
-     *
-     * @param String Field name to group by
-     *
-     * @return ResultSet
-     */
-    public function groupByChildField($field, $childField)
-    {
-      $results = [];
+  /**
+   * Groups data into ResultSet based on
+   * child group field specified
+   * The child field must contain a key => value
+   * to resolve the grouping
+   *
+   * @param String Field name to group by
+   *
+   * @return ResultSet
+   */
+  public function groupByChildField($field, $childField)
+  {
+    $results = [];
 
-      foreach($this as $key => $item) {
-        $child = static::getItemFieldValue($item, $field);
-        $fieldValue = static::getItemFieldValue($child, $childField);
-        $results[$fieldValue][] = $item;
-      }
-
-      return new ResultSet($results);
+    foreach($this as $key => $item) {
+      $child = static::getItemFieldValue($item, $field);
+      $fieldValue = static::getItemFieldValue($child, $childField);
+      $results[$fieldValue][] = $item;
     }
 
-    /**
-     * Filters the contained objects to only return
-     * the specified field
-     *
-     * @param String field to return
-     *
-     * @return ResultSet
-     */
-    public function field($fieldName)
-    {
-        $fieldValues = [];
+    return new ResultSet($results);
+  }
 
-        $iterator = $this->getIterator();
-        foreach($iterator as $key => $item) {
-            if ((isset($item->$fieldName)) && (strlen($item->$fieldName) > 0)) {
-                $fieldValues[strtolower($item->$fieldName)] = $item->$fieldName;
-            }
-        }
+  /**
+   * Filters the contained objects to only return
+   * the specified field
+   *
+   * @param String field to return
+   *
+   * @return ResultSet
+   *
+   * @todo Deal with where field contains non-scalar value
+   */
+  public function field($field)
+  {
+    $fieldValues = [];
 
-        return new ResultSet($fieldValues);
+    foreach($this as $key => $item) {
+      $value = static::getItemFieldValue($item, $field);
+      $fieldValues[strtolower($value)] = $value;
     }
+
+    return new ResultSet(array_values($fieldValues));
+  }
 
     /**
      * Filters the contained objects to only return
