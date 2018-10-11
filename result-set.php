@@ -311,34 +311,39 @@ class ResultSet extends ArrayObject {
     return new ResultSet($results);
   }
 
-    /**
-     * Returns the ResultSet ordered by $order and
-     * optionally $subOrder
-     *
-     * @param String $order
-     * @param String Optional $subOrder
-     *
-     * @return ResultSet
-     */
-    public function orderBy($order, $subOrder = '')
-    {
-        if (strlen($subOrder) > 0) {
-            $this->uasort(function ($a, $b) use($order, $subOrder) {
-                if ($a->$order == $b->$order) {
-                    return $a->$subOrder <=> $b->$subOrder;
-                }
-                return strcmp($a->$order, $b->$order);
-            });
-        } else {
-            $this->uasort(function ($a, $b) use($order) {
-                $testa = (is_array($a)) ? $a[$order] : $a->$order;
-                $testb = (is_array($b)) ? $b[$order] : $b->$order;
-                return $testa <=> $testb;
-            });
+  /**
+   * Returns the ResultSet ordered by $order and
+   * optionally $subOrder
+   *
+   * @param String $order
+   * @param String Optional $subOrder
+   *
+   * @return ResultSet
+   */
+  public function orderBy($order, $subOrder = '')
+  {
+    if (strlen($subOrder) > 0) {
+      $this->uasort(function ($a, $b) use($order, $subOrder) {
+        if ($a->$order == $b->$order) {
+          return $a->$subOrder <=> $b->$subOrder;
         }
-
-        return new ResultSet($this);
+        return strcmp($a->$order, $b->$order);
+      });
+    } else {
+      $this->uasort(function ($a, $b) use($order) {
+        $testa = (is_array($a)) ? $a[$order] : $a->$order;
+        $testb = (is_array($b)) ? $b[$order] : $b->$order;
+        return $testa <=> $testb;
+      });
     }
+
+    $result = [];
+    foreach ($this as $item) {
+      $result[] = $item;
+    }
+
+    return ResultSet::getInstance($result);
+  }
 
     /**
      * Groups data into ResultSet based on

@@ -130,4 +130,30 @@ class TestData {
 
     return $items;
   }
+
+  public static function getPeople()
+  {
+    $people = [
+      (object) ['firstname' => 'Bob', 'lastname' => 'Smith'],
+      (object) ['firstname' => 'Joanne', 'lastname' => 'Hague'],
+      (object) ['firstname' => 'Sophia', 'lastname' => 'Ovchinin'],
+      (object) ['firstname' => 'Amelia', 'lastname' => 'Smith'],
+      (object) ['firstname' => 'Lily', 'lastname' => 'Jones'],
+      (object) ['firstname' => 'Emily', 'lastname' => 'Walsh'],
+      (object) ['firstname' => 'Ava', 'lastname' => 'Humphries'],
+      (object) ['firstname' => 'Isla', 'lastname' => 'Francis'],
+      (object) ['firstname' => 'Muhammed', 'lastname' => 'Boyce'],
+      (object) ['firstname' => 'Oliver', 'lastname' => 'Jones'],
+      (object) ['firstname' => 'Noah', 'lastname' => 'Clifton'],
+      (object) ['firstname' => 'George', 'lastname' => 'Shephard'],
+      (object) ['firstname' => 'Harry', 'lastname' => 'Middleton'],
+      (object) ['firstname' => 'Charlie', 'lastname' => 'Smith'],
+      (object) ['firstname' => 'Jack', 'lastname' => 'Brooksbank'],
+      (object) ['firstname' => 'Freddie', 'lastname' => 'Cabot'],
+      (object) ['firstname' => 'Alfie', 'lastname' => 'Conner'],
+    ];
+
+    return $people;
+  }
+
 }
