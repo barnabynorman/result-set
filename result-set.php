@@ -410,32 +410,32 @@ class ResultSet extends ArrayObject {
     return new ResultSet(array_values($fieldValues));
   }
 
-    /**
-     * Filters the contained objects to only return
-     * the specified fields as a ResultSet of Arrays
-     * containing the fields and their values
-     *
-     * ?? Should this be done with a map by calling code?
-     *
-     * @param Array of fields to return
-     *
-     * @return ResultSet
-     */
-    public function fields($fieldNames = [])
-    {
-      $results = [];
+  /**
+   * Filters the contained objects to only return
+   * the specified fields as a ResultSet of Arrays
+   * containing the fields and their values
+   *
+   * @param Array of fields to return
+   *
+   * @return ResultSet of Arrays
+   *
+   * @todo Rewrite using filter()
+   */
+  public function fields($fieldNames = [])
+  {
+    $results = [];
 
-      foreach($this as $key => $item) {
-        $justFieldsItem = [];
-        foreach($fieldNames as $field) {
-          $fieldValue = static::getItemFieldValue($item, $field);
-          $justFieldsItem[$field] = $fieldValue;
-        }
-        $results[] = new ResultSet($justFieldsItem);
+    foreach($this as $key => $item) {
+      $justFieldsItem = [];
+      foreach($fieldNames as $field) {
+        $fieldValue = static::getItemFieldValue($item, $field);
+        $justFieldsItem[$field] = $fieldValue;
       }
-
-      return new ResultSet($results);
+      $results[] = $justFieldsItem;
     }
+
+    return new ResultSet($results);
+  }
 
     /**
      * Joins an additional ResultSet / array to existing

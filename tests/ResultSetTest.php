@@ -330,4 +330,18 @@ class ResultSetTest extends TestCase {
     $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
     $this->assertEquals(count($result), 14);
   }
+
+  public function testFieldsReturnsAFilteredResultSetContainingSpecifiedFieldsFromData()
+  {
+    $groceryList = TestData::getItemsWithTypeLabel();
+    $groceryListRs = new ResultSet($groceryList);
+
+    $result = $groceryListRs->fields(['name', 'type']);
+
+    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertEquals(count($result), 11);
+    $this->assertEquals($result[0]['name'], 'Orange');
+    $this->assertEquals($result[0]['type'], 'Fruit');
+
+  }
 }
