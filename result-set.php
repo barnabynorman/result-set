@@ -345,25 +345,25 @@ class ResultSet extends ArrayObject {
     return ResultSet::getInstance($result);
   }
 
-    /**
-     * Groups data into ResultSet based on
-     * group field specified
-     *
-     * @param String Field name to group by
-     *
-     * @return ResultSet
-     */
-    public function groupBy($field)
-    {
-      $results = [];
+  /**
+   * Groups data into ResultSet based on
+   * group field specified
+   *
+   * @param String Field name to group by
+   *
+   * @return ResultSet
+   */
+  public function groupBy($field)
+  {
+    $results = [];
 
-      foreach($this as $key => $item) {
-        $fieldValue = static::getItemFieldValue($item, $field);
-        $results[$fieldValue][] = $item;
-      }
-
-      return new ResultSet($results);
+    foreach($this as $key => $item) {
+      $fieldValue = static::getItemFieldValue($item, $field);
+      $results[$fieldValue][] = $item;
     }
+
+    return new ResultSet($results);
+  }
 
     /**
      * Groups data into ResultSet based on

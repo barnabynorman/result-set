@@ -295,6 +295,18 @@ class ResultSetTest extends TestCase {
     $this->assertEquals($result[16]->firstname, 'Emily');
   }
 
+  public function testGroupByReturnsResultSetContainingSubSetsOfGroupedData()
+  {
+    $people = TestData::getPeople();
+    $peopleRs = new ResultSet($people);
+
+    $result = $peopleRs->groupBy('lastname');
+
+    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertEquals(count($result['Smith']), 3);
+    $this->assertEquals(count($result['Jones']), 2);
+    $this->assertEquals(count($result['Clifton']), 1);
+  }
 
   public function testGroupByChildFieldReturnsGroupedResultBasedOnChildField()
   {
