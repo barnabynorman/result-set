@@ -512,16 +512,16 @@ class ResultSet extends ArrayObject {
     return $this->getArrayCopy();
   }
 
+  /**
+   * Degrades ResultSet into JSON string
+   *
+   * @return JSON
+   */
+  public function toJson()
+  {
+    return json_encode($this->getArrayCopy());
+  }
 
-    /**
-     * Degrades ResultSet into JSON string
-     *
-     * @return JSON
-     */
-    public function toJson()
-    {
-        return json_encode($this->getArrayCopy());
-    }
 
     /**
      * Ensures that the contents of the ResultSet
