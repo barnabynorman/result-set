@@ -415,4 +415,26 @@ class ResultSetTest extends TestCase {
     $this->assertEquals($result[1], 2);
     $this->assertEquals($result[2], 3);
   }
+
+  public function testBetweenReturnsExpectedItemsInOrderInResultSet()
+  {
+    $people = TestData::getPeople();
+    $peopleRs = new ResultSet($people);
+
+    $result = $peopleRs->between(2, 6);
+
+    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertEquals(count($result), 4);
+  }
+
+  public function testBetweenworksWithKeyNames()
+  {
+    $people = TestData::getPeople();
+    $peopleRs = new ResultSet($people);
+    $peopleRs = $peopleRs->groupBy('lastname');
+
+    $result = $peopleRs->between(2, 6);
+
+    $this->assertEquals(count($result), 4);
+  }
 }

@@ -542,36 +542,36 @@ class ResultSet extends ArrayObject {
     return new ResultSet(array_values($results));
   }
 
+  /**
+   * Filters objects between positions
+   * Note that the ResultSet counts from 0
+   *
+   * @param Integer starting point
+   * @param Integer end point
+   *
+   * @return ResultSet
+   */
+  public function between($start, $end = 0)
+  {
+    $count = 0;
 
-    /**
-     * Filters objects between positions
-     * Note that the ResultSet counts from 0
-     *
-     * @param Integer starting point
-     * @param Integer end point
-     *
-     * @return ResultSet
-     */
-    public function between($start, $end = 0)
-    {
-        $count = 0;
-
-        if ($end == 0) {
-            $end = $this->count();
-        }
-
-        $results = [];
-
-        foreach ($this as $item) {
-            if (($count >= $start) && ($count < $end)) {
-                $results[] = $item;
-            }
-
-            $count++;
-        }
-
-        return new ResultSet($results);
+    if ($end == 0) {
+        $end = $this->count();
     }
+
+    $results = [];
+
+    foreach ($this as $item) {
+      if (($count >= $start) && ($count < $end)) {
+          $results[] = $item;
+      }
+
+      $count++;
+    }
+
+    return new ResultSet($results);
+  }
+
 
     /**
      * Limits the number of records returned
