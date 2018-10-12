@@ -502,32 +502,16 @@ class ResultSet extends ArrayObject {
     return new ResultSet($results);
   }
 
+  /**
+   * Degrades ResultSet back to Array
+   *
+   * @return Array
+   */
+  public function toArray()
+  {
+    return $this->getArrayCopy();
+  }
 
-    /**
-     * Degrades ResultSet back to Array
-     *
-     * @return Array
-     */
-    public function toArray()
-    {
-        return $this->getArrayCopy();
-    }
-
-    /**
-     * Degrades ResultSet back to Array including inner objects
-     *
-     * @return Array
-     */
-    public function toArrayDeep()
-    {
-        $results = [];
-
-        foreach ($this as $item) {
-            $results[] = $item->toArray();
-        }
-
-        return $results;
-    }
 
     /**
      * Degrades ResultSet into JSON string
