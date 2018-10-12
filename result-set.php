@@ -437,70 +437,71 @@ class ResultSet extends ArrayObject {
     return new ResultSet($results);
   }
 
-    /**
-     * Joins an additional ResultSet / array to existing
-     * ResultSet by fieldname and indexes
-     *
-     * It will simulate an inner or outer join depending on configuration
-     *
-     * @param ResultSet to join
-     * @param String name of new fieldName where joined data attached
-     * @param Array of keys to match
-     * @param String 'all' or ??
-     */
-    protected function doOuterJoin($dataToJoin, $fieldName, $indexes, $type)
-    {
-        if ($type == 'all') {
-            $startValue = TRUE;
-            $changeTo = FALSE;
-        } else {
-            $startValue = FALSE;
-            $changeTo = TRUE;
+  /**
+   * Returns original ResultSet with extra field containing array of
+   * all matching from the supplied ResultSet / Array
+   *
+   * @param Array $joinData - the data to join with
+   * @param String $newField - the new field name to add
+   * @param String $localKey - the name of the key from this ResultSet
+   * @param String $forignKey - the name of the remote key used to match
+   *
+   * @return ResultSet containing joined sets
+   */
+  public function leftOuterJoin($joinData, $newField, $localKey, $forignKey)
+  {
+    $results = [];
+
+    foreach ($this as $item) {
+      $localFieldValue = static::getItemFieldValue($item, $localKey);
+      $item->$newField = [];
+      foreach ($joinData as $fData) {
+        $forignFieldValue = static::getItemFieldValue($fData, $forignKey);
+
+        if ($localFieldValue == $forignFieldValue) {
+          $item->$newField[] = $fData;
         }
+      }
+      $results[] = $item;
+    }
 
-        $joinedData = [];
+    return new ResultSet($results);
+  }
 
-        $selfIterator = $this->getIterator();
-        $joinIterator = $dataToJoin->getIterator();
+  /**
+   * Returns original ResultSet with extra field containing one
+   * matching from the supplied ResultSet / Array
+   * Any un-matched items will be filtered from the final ResultSet
+   *
+   * Note that if the supplied Set contains more than one match
+   * the last match will be returned
+   *
+   * @param Array $joinData - the data to join with
+   * @param String $newField - the new field name to add
+   * @param String $localKey - the name of the key from this ResultSet
+   * @param String $forignKey - the name of the remote key used to match
+   *
+   * @return ResultSet containing joined sets
+   */
+  public function innerJoin($joinData, $newField, $localKey, $forignKey)
+  {
+    $results = [];
 
-        foreach ($selfIterator as $key => $selfRecord) {
+    foreach ($this as $item) {
+      $localFieldValue = static::getItemFieldValue($item, $localKey);
+      foreach ($joinData as $fData) {
+        $forignFieldValue = static::getItemFieldValue($fData, $forignKey);
 
-            foreach ($dataToJoin as $joinRecord) {
-
-                $match = $startValue;
-
-                foreach ($indexes as $selfField => $joinField) {
-                    if ($startValue == TRUE) {
-                        if ($selfRecord->$selfField !== $joinRecord->$joinField) {
-                            $match = $changeTo;
-                        }
-                    } else {
-                        if ($selfRecord->$selfField === $joinRecord->$joinField) {
-                            $match = $changeTo;
-                        }
-                    }
-                }
-
-                if ($match) {
-                    $selfRecord->$fieldName = $joinRecord;
-                }
-            }
-
-            $joinedData[] = $selfRecord;
+        if ($localFieldValue == $forignFieldValue) {
+          $item->$newField = $fData;
+          $results[] = $item;
         }
-
-        return new ResultSet($joinedData);
+      }
     }
 
-    public function outerJoinAll($dataToJoin, $fieldName, $indexes)
-    {
-        return $this->doOuterJoin($dataToJoin, $fieldName, $indexes, 'all');
-    }
+    return new ResultSet($results);
+  }
 
-    public function outerJoinAny($dataToJoin, $fieldName, $indexes)
-    {
-        return $this->doOuterJoin($dataToJoin, $fieldName, $indexes, 'any');
-    }
 
     /**
      * Degrades ResultSet back to Array

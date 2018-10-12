@@ -344,4 +344,37 @@ class ResultSetTest extends TestCase {
     $this->assertEquals($result[0]['type'], 'Fruit');
 
   }
+
+  public function testLeftOuterJoinJoinsArrayToResultSetReturningAllFromResultSetAndJoinsInNewField()
+  {
+    $groceryTypes = TestData::getGroceryTypes();
+    $groceryTypes[] = new GroceryType(7, 'Pet food');
+    $groceryTypesRs = new ResultSet($groceryTypes);
+
+    $groceryItems = TestData::getItems();
+    $groceryItems[] = new GroceryItem(11, 'Cheese', 8);
+
+    $result = $groceryTypesRs->leftOuterJoin($groceryItems, 'items', 'id', 'typeId');
+
+    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertEquals(count($result), 7);
+    $this->assertEquals(count($result[0]->items), 4);
+    $this->assertEquals(count($result[6]->items), 0);
+  }
+
+  public function testInnerJoinJoinsArrayToResultSetReturningOnlyFromSetsThatMatch()
+  {
+    $groceryTypes = TestData::getGroceryTypes();
+    $groceryTypes[] = new GroceryType(7, 'Pet food');
+
+    $groceryItems = TestData::getItems();
+    $groceryItems[] = new GroceryItem(11, 'Cheese', 8);
+    $groceryItemsRs = new ResultSet($groceryItems);
+
+    $result = $groceryItemsRs->innerJoin($groceryTypes, 'type', 'typeId', 'id');
+
+    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertEquals(count($result), 11);
+    $this->assertNotEquals(count($result->groceryItems), count($result));
+  }
 }
