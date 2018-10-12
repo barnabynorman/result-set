@@ -522,25 +522,26 @@ class ResultSet extends ArrayObject {
     return json_encode($this->getArrayCopy());
   }
 
+  /**
+   * Ensures that the contents of the ResultSet
+   * are unique by a field specified as a key
+   *
+   * @param String field to use as unique key
+   *
+   * @return ResultSet
+   */
+  public function unique($field)
+  {
+    $results = [];
 
-    /**
-     * Ensures that the contents of the ResultSet
-     * are unique by a field specified as a key
-     *
-     * @param String field to use as unique key
-     *
-     * @return ResultSet
-     */
-    public function unique($field)
-    {
-        $results = [];
-
-        foreach ($this->toArray() as $value) {
-            $results[$value->$field] = $value;
-        }
-
-        return new ResultSet(array_values($results));
+    foreach ($this as $item) {
+      $value = static::getItemFieldValue($item, $field);
+      $results[$value] = $value;
     }
+
+    return new ResultSet(array_values($results));
+  }
+
 
     /**
      * Filters objects between positions

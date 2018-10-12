@@ -172,4 +172,17 @@ class TestData {
     return $people;
   }
 
+  public static function getArrayOfNumberObjects()
+  {
+    $numbers = [1,2,3,3];
+
+    $data = [];
+
+    foreach ($numbers as $num) {
+      $data[] = (object)['number' => $num];
+    }
+
+    return $data;
+  }
+
 }

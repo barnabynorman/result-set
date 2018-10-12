@@ -401,4 +401,18 @@ class ResultSetTest extends TestCase {
     $this->assertEquals(count($result), 11);
     $this->assertEquals($result[2]['name'], 'Pear');
   }
+
+  public function testUniqueReturnsResultSetContainingUniqueSet()
+  {
+    $numberObjects = TestData::getArrayOfNumberObjects();
+    $numberObjectsRs = new ResultSet($numberObjects);
+
+    $result = $numberObjectsRs->unique('number');
+
+    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertEquals(count($result), 3);
+    $this->assertEquals($result[0], 1);
+    $this->assertEquals($result[1], 2);
+    $this->assertEquals($result[2], 3);
+  }
 }
