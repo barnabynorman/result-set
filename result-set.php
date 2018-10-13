@@ -572,24 +572,24 @@ class ResultSet extends ArrayObject {
     return new ResultSet($results);
   }
 
-
-    /**
-     * Limits the number of records returned
-     * from the ResultSet
-     *
-     * @param Integer number of records
-     *
-     * @return ResultSet
-     */
-    public function limit($no)
-    {
-        if ($no < 0) {
-            $start = $this->count() + $no;
-            return $this->between($start);
-        }
-
-        return $this->between(0, $no);
+  /**
+   * Limits the number of records returned
+   * from the ResultSet
+   *
+   * @param Integer number of records
+   *
+   * @return ResultSet
+   */
+  public function limit($no)
+  {
+    if ($no < 0) {
+      $start = $this->count() + $no;
+      return $this->between($start);
     }
+
+    return $this->between(0, $no);
+  }
+
 
     public function each($paramName, $function)
     {
