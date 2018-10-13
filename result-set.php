@@ -630,22 +630,29 @@ class ResultSet extends ArrayObject {
     return $this;
   }
 
+  /**
+   * Wrapper for uasort
+   *
+   * @param Function $comparisonFunction to do sort
+   *
+   * @return ResultSet
+   */
+  public function sort($comparisonFunction)
+  {
+    $this->uasort($comparisonFunction);
+    return $this;
+  }
 
-    protected static function getItemFieldValue($item, $field)
-    {
-      if (((is_array($item)) || (is_subclass_of($item, 'ArrayObject'))) && (isset($item[$field]))) {
-        return $item[$field];
-      } elseif (isset($item->$field)) {
-        return $item->$field;
-      }
-
-      return NULL;
+  protected static function getItemFieldValue($item, $field)
+  {
+    if (((is_array($item)) || (is_subclass_of($item, 'ArrayObject'))) && (isset($item[$field]))) {
+      return $item[$field];
+    } elseif (isset($item->$field)) {
+      return $item->$field;
     }
 
-    public function sort($comparisonFunction)
-    {
-      $this->uasort($comparisonFunction);
-        return $this;
-    }
+    return NULL;
+  }
+
 
 }
