@@ -590,13 +590,26 @@ class ResultSet extends ArrayObject {
     return $this->between(0, $no);
   }
 
-
-    public function each($paramName, $function)
-    {
-      foreach ($this as $$paramName) {
-        $function($$paramName);
-      }
+  /**
+   * Allows a supplied function to be run against
+   * each item in ResultSet
+   *
+   * Note to include or return other parameters in the closure
+   * append the $function structure with "use ($myParameterName)"
+   * Also pass by address (&) if the parameter is to be mutated
+   *
+   * @param String $paramName - name of argument of function
+   * @param Function $function - a closure function
+   *
+   * @return Void
+   */
+  public function each($paramName, $function)
+  {
+    foreach ($this as $$paramName) {
+      $function($$paramName);
     }
+  }
+
 
     public function callMethod($method)
     {
