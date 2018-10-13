@@ -31,6 +31,22 @@ class GroceryType {
 }
 
 /**
+ * Defines a simple object that holds a number value
+ */
+class NumberObj {
+  public $number;
+
+  public function __construct($number) {
+    $this->number = $number;
+  }
+
+  public function makeBigger()
+  {
+    $this->number += 10;
+  }
+}
+
+/**
  * Collection of methods used in testing
  * Assembles data ready for testing based
  * on groceries etc
@@ -179,7 +195,7 @@ class TestData {
     $data = [];
 
     foreach ($numbers as $num) {
-      $data[] = (object)['number' => $num];
+      $data[] = new NumberObj($num);
     }
 
     return $data;

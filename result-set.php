@@ -610,13 +610,26 @@ class ResultSet extends ArrayObject {
     }
   }
 
-
-    public function callMethod($method)
-    {
-      foreach ($this as $item) {
+  /**
+   * Calls method specified on each item in ResultSet
+   * Note that the method will ignore any item that
+   * does not support the method passed without error!
+   *
+   * @param String $method name in item to call
+   *
+   * @return ResultSet
+   */
+  public function callMethod($method)
+  {
+    foreach ($this as $item) {
+      if (method_exists($item, $method)) {
         $item->$method();
       }
     }
+
+    return $this;
+  }
+
 
     protected static function getItemFieldValue($item, $field)
     {
