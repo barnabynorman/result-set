@@ -1,6 +1,8 @@
 <?php
 
-class ResultSet extends ArrayObject {
+namespace ResultSet;
+
+class ResultSet extends \ArrayObject {
 
   /**
    * Create an instance of ResultSet

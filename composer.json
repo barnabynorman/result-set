@@ -3,7 +3,13 @@
   "type": "library",
   "description": "Manage collections of items with filters and utilities",
   "license": "MIT",
+  "minimum-stability": "dev",
   "require": {
     "php": "^7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "ResultSet\\": "src/ResultSet/"
+    }
   }
 }
