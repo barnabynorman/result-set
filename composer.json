@@ -1,5 +1,5 @@
 {
-  "name": "barnabynorman/result-set",
+  "name": "barnabynorman/resultset",
   "type": "library",
   "description": "Manage collections of items with filters and utilities",
   "license": "MIT",
