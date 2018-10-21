@@ -80,4 +80,16 @@ class WhereTest extends AbstractTestCase {
     $this->assertEquals(count($result), 2);
   }
 
+  public function testWithArrayItems()
+  {
+    $cssColours = TestData::getArrayDataColours();
+    $cssColoursRs = ResultSet::getInstance($cssColours);
+
+    $result = $cssColoursRs->where(['name' => 'orchid']);
+
+    $this->assertInstanceOfResultSet($result);
+    $this->assertEquals(count($result), 1);
+    $this->assertEquals($result[0]['hex'], '#DA70D6');
+  }
+
 }

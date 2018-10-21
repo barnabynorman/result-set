@@ -202,4 +202,32 @@ class TestData {
     return $data;
   }
 
+  public static function getArrayDataColours()
+  {
+    $cssColours = [
+      0 => [
+        'hex' => '#EE82EE',
+        'name' => 'violet',
+        'rgb' => '238,130,238'
+      ],
+      1 => [
+        'hex' => '#DA70D6',
+        'name' => 'orchid',
+        'rgb' => '218,112,214'
+      ],
+      2 => [
+        'hex' => '#FF00FF',
+        'name' => 'fuchsia',
+        'rgb' => '255,0,255'
+      ],
+      3 => [
+        'hex' => '#FF00FF',
+        'name' => 'magenta',
+        'rgb' => '255,0,255'
+      ],
+    ];
+
+    return $cssColours;
+  }
+
 }
