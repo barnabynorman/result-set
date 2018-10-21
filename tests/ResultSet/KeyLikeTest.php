@@ -22,11 +22,11 @@ class KeyLikeTest extends AbstractTestCase {
 
     $result = $gListRs->keyLike('Drinks');
 
-    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 1);
 
     $result2 = $gListRs->keyLike('Bob');
-    $this->assertTrue(is_subclass_of($result2, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($result2);
     $this->assertEquals(count($result2), 0);
   }
 

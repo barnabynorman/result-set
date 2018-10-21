@@ -14,6 +14,8 @@ class ToJsonTest extends AbstractTestCase {
     $groceryItemsRs = new ResultSet($groceryItems);
 
     $resultJson = $groceryItemsRs->toJson();
+    $this->assertNotInstanceOfResultSet($resultJson);
+
     $result = json_decode($resultJson, true);
 
     $this->assertTrue(is_array($result));

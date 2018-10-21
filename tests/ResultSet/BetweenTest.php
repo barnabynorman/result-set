@@ -15,7 +15,7 @@ class BetweenTest extends AbstractTestCase {
 
     $result = $peopleRs->between(2, 6);
 
-    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 4);
   }
 

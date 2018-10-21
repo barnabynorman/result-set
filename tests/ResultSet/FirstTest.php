@@ -13,7 +13,9 @@ class FirstTest extends AbstractTestCase {
     $data = ['one', 'two', 'three'];
     $rs = new ResultSet($data);
 
-    $this->assertEquals($rs->first(), 'one');
+    $result = $rs->first();
+    $this->assertEquals($result, 'one');
+    $this->assertNotInstanceOfResultSet($result);
   }
 
 }

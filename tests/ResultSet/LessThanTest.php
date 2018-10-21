@@ -15,7 +15,7 @@ class LessThanTest extends AbstractTestCase {
 
     $result = $itemsRs->lessThan(['typeId' => 2]);
 
-    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 4);
     $this->assertEquals($result[2]->name, 'Pear');
   }

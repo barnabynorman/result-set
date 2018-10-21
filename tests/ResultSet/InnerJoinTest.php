@@ -19,7 +19,7 @@ class InnerJoinTest extends AbstractTestCase {
 
     $result = $groceryItemsRs->innerJoin($groceryTypes, 'type', 'typeId', 'id');
 
-    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 11);
     $this->assertNotEquals(count($result->groceryItems), count($result));
   }

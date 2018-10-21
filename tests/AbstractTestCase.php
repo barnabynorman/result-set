@@ -22,4 +22,9 @@ abstract class AbstractTestCase extends TestCase
       $this->assertInstanceOf(ResultSet::class, $rs);
   }
 
+  public function assertNotInstanceOfResultSet($rs)
+  {
+      $this->assertNotInstanceOf(ResultSet::class, $rs);
+  }
+
 }

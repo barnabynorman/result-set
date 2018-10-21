@@ -15,7 +15,7 @@ class SearchTest extends AbstractTestCase {
 
     $result = $groceryListRs->search('Beer');
 
-    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 1);
     $this->assertEquals($result[0]->name, 'Beer');
   }
@@ -27,7 +27,7 @@ class SearchTest extends AbstractTestCase {
 
     $result = $groceryListRs->search('Tinned');
 
-    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 1);
     $this->assertEquals($result[0]->name, 'Baked beans');
   }
@@ -39,7 +39,7 @@ class SearchTest extends AbstractTestCase {
 
     $result = $groceryListRs->search('beer');
 
-    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 1);
     $this->assertEquals($result[0]->name, 'Beer');
   }

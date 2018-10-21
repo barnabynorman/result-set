@@ -15,7 +15,7 @@ class ToArrayTest extends AbstractTestCase {
 
     $result = $groceryItemsRs->toArray();
 
-    $this->assertFalse(is_subclass_of($result, 'ArrayObject'));
+    $this->assertNotInstanceOfResultSet($result);
     $this->assertTrue(is_array($result));
   }
 

@@ -15,7 +15,7 @@ class UniqueTest extends AbstractTestCase {
 
     $result = $numberObjectsRs->unique('number');
 
-    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 3);
     $this->assertEquals($result[0], 1);
     $this->assertEquals($result[1], 2);

@@ -14,7 +14,7 @@ class LikeChildTest extends AbstractTestCase {
     $groceryListRs = new ResultSet($groceryList);
     $result = $groceryListRs->likeChild('items', ['name' => 'pp']);
 
-    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 3);
     $this->assertEquals($result[1]->name, 'Veg');
   }

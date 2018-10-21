@@ -11,7 +11,7 @@ class GetInstanceTest extends AbstractTestCase {
   {
     $data = ['one', 'two', 'three'];
     $rs = ResultSet::getInstance($data);
-    $this->assertTrue(is_subclass_of($rs, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($rs);
   }
 
   /**
@@ -24,7 +24,7 @@ class GetInstanceTest extends AbstractTestCase {
 
     $comment = 'getInstance: From existing ResultSet';
     $rz = ResultSet::getInstance($rs);
-    $this->assertTrue(is_subclass_of($rz, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($rz);
   }
 
   public function testGetInstanceFromNonResultSetInstance()
@@ -32,7 +32,7 @@ class GetInstanceTest extends AbstractTestCase {
     $items = TestData::getItems();
     $orange = $items[0];
     $orangeRs = ResultSet::getInstance($orange);
-    $this->assertTrue(is_subclass_of($orangeRs, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($orangeRs);
   }
 
 }

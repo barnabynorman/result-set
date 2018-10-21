@@ -16,7 +16,7 @@ class EkilTest extends AbstractTestCase {
     $para = 'Some days I like to go down to the shop and get myself a lovely kipper, that I cover in tomato sauce';
     $result = $itemsRs->ekil(['name' => $para]);
 
-    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 2);
     $this->assertEquals($result[1]->name, 'Kipper');
   }

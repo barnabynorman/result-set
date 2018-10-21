@@ -14,7 +14,7 @@ class OrderByTest extends AbstractTestCase {
 
     $result = $peopleRs->orderBy('firstname');
 
-    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 17);
   }
 

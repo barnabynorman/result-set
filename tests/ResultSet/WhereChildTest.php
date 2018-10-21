@@ -14,7 +14,7 @@ class WhereChildTest extends AbstractTestCase {
     $gListRs = new ResultSet($gList);
     $result = $gListRs->whereChild('items', ['name' => 'Celery']);
 
-    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 1);
     $this->assertEquals(count($result[0]->items), 3);
     $this->assertEquals($result[0]->items[2]->name, 'Celery');

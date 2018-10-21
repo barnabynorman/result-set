@@ -19,7 +19,7 @@ class LeftOuterJoinTest extends AbstractTestCase {
 
     $result = $groceryTypesRs->leftOuterJoin($groceryItems, 'items', 'id', 'typeId');
 
-    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 7);
     $this->assertEquals(count($result[0]->items), 4);
     $this->assertEquals(count($result[6]->items), 0);

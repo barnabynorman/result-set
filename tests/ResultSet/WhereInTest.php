@@ -14,7 +14,7 @@ class WhereInTest extends AbstractTestCase {
     $itemsRs = new ResultSet($items);
 
     $result = $itemsRs->whereIn('id', '1,3,5');
-    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 3);
     $this->assertEquals($result[0]->name, 'Orange');
     $this->assertEquals($result[1]->name, 'Pear');

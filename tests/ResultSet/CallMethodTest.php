@@ -15,7 +15,7 @@ class CallMethodTest extends AbstractTestCase {
 
     $numbersRs->callMethod('makeSmaller');
 
-    $this->assertTrue(is_subclass_of($numbersRs, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($numbersRs);
     $this->assertEquals($numbersRs[0], 3);
     $this->assertEquals($numbersRs[1], 5);
     $this->assertEquals($numbersRs[2], 6);

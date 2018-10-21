@@ -15,7 +15,7 @@ class FieldsTest extends AbstractTestCase {
 
     $result = $groceryListRs->fields(['name', 'type']);
 
-    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 11);
     $this->assertEquals($result[0]['name'], 'Orange');
     $this->assertEquals($result[0]['type'], 'Fruit');

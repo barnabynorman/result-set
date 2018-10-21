@@ -15,7 +15,7 @@ class LimitTest extends AbstractTestCase {
 
     $result = $peopleRs->limit(3);
 
-    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($peopleRs), 17);
     $this->assertEquals(count($result), 3);
   }

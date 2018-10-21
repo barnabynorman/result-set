@@ -42,7 +42,7 @@ class EachTest extends AbstractTestCase {
       $results[] = $n;
     });
 
-    $this->assertTrue(is_subclass_of($numbersRs, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($numbersRs);
     $this->assertEquals(count($results), count($numbersRs));
     $this->assertEquals($results[0]->number, 11);
     $this->assertEquals($results[1]->number, 12);

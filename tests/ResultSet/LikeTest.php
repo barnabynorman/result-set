@@ -14,7 +14,7 @@ class LikeTest extends AbstractTestCase {
     $itemsRs = new ResultSet($items);
     $result = $itemsRs->like(['name' => 'ato']);
 
-    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 2);
     $this->assertEquals($result[0]->name, 'Potato');
     $this->assertEquals($result[1]->name, 'Tomato');
@@ -33,7 +33,7 @@ class LikeTest extends AbstractTestCase {
       }
     }
 
-    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 5);
     $this->assertEquals($result[2]->type, 'Fruit');
     $this->assertEquals($tomCount, 1);
@@ -45,7 +45,7 @@ class LikeTest extends AbstractTestCase {
     $itemsRs = new ResultSet($items);
     $result = $itemsRs->like(['name' => '']);
 
-    $this->assertTrue(is_subclass_of($result, 'ArrayObject'));
+    $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 0);
   }
 
