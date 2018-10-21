@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="tests/bootstrap.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
+>
+
+    <filter>
+        <whitelist>
+            <directory>src/ResultSet</directory>
+        </whitelist>
+    </filter>
+
+    <testsuites>
+        <testsuite name="resultset">
+            <directory>tests/ResultSet</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

@@ -1,5 +1,6 @@
 <?php
 
+namespace Tests\ResultSet;
 /**
  * Contains single instance of a grocery item
  */
