@@ -10,11 +10,11 @@ class GroceryItem {
     public $name;
     public $typeId;
 
-    public function __construct($id, $name, $typeId) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->typeId = $typeId;
-    }
+    public function __construct($data) {
+      $this->id = $data['id'];
+      $this->name = $data['name'];
+      $this->typeId = $data['type_id'];
+  }
 }
 
 /**
@@ -60,17 +60,17 @@ class TestData {
   public static function getItems()
   {
     $items = [];
-    $items[] = new GroceryItem(1, 'Orange', 1);
-    $items[] = new GroceryItem(2, 'Apple', 1);
-    $items[] = new GroceryItem(3, 'Pear', 1);
-    $items[] = new GroceryItem(4, 'Potato', 2);
-    $items[] = new GroceryItem(5, 'Pepper', 2);
-    $items[] = new GroceryItem(6, 'Tomato', 1);
-    $items[] = new GroceryItem(7, 'Celery', 2);
-    $items[] = new GroceryItem(8, 'Kipper', 3);
-    $items[] = new GroceryItem(9, 'Baked beans', 4);
-    $items[] = new GroceryItem(10, 'Ketchup', 5);
-    $items[] = new GroceryItem(11, 'Beer', 6);
+    $items[] = new GroceryItem([ 'id' => 1,  'name' => 'Orange',      'type_id' => 1]);
+    $items[] = new GroceryItem([ 'id' => 2,  'name' => 'Apple',       'type_id' => 1]);
+    $items[] = new GroceryItem([ 'id' => 3,  'name' => 'Pear',        'type_id' => 1]);
+    $items[] = new GroceryItem([ 'id' => 4,  'name' => 'Potato',      'type_id' => 2]);
+    $items[] = new GroceryItem([ 'id' => 5,  'name' => 'Pepper',      'type_id' => 2]);
+    $items[] = new GroceryItem([ 'id' => 6,  'name' => 'Tomato',      'type_id' => 1]);
+    $items[] = new GroceryItem([ 'id' => 7,  'name' => 'Celery',      'type_id' => 2]);
+    $items[] = new GroceryItem([ 'id' => 8,  'name' => 'Kipper',      'type_id' => 3]);
+    $items[] = new GroceryItem([ 'id' => 9,  'name' => 'Baked beans', 'type_id' => 4]);
+    $items[] = new GroceryItem([ 'id' => 10, 'name' => 'Ketchup',     'type_id' => 5]);
+    $items[] = new GroceryItem([ 'id' => 11, 'name' => 'Beer',        'type_id' => 6]);
 
     return $items;
   }
