@@ -67,18 +67,22 @@ class ResultSet extends \ArrayObject {
   {
     $results = [];
 
-    foreach ($clauses as $field => $value) {
+    if ((!is_array($clauses)) || (count($clauses) == 0)) {
+      return new ResultSet([]);
+    }
 
-      foreach($this as $item) {
-        if (is_array($item)) {
-          if ($item[$field] == $value) {
-              $results[] = $item;
-          }
-        } elseif (isset($item->$field)) {
-          if ($item->$field == $value) {
-              $results[] = $item;
-          }
+    foreach($this as $item) {
+
+      $add = TRUE;
+      foreach ($clauses as $field => $value) {
+        $fieldValue = static::getItemFieldValue($item, $field);
+        if ($fieldValue != $value) {
+          $add = FALSE;
         }
+      }
+
+      if ($add) {
+        $results[] = $item;
       }
     }
 
