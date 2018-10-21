@@ -11,11 +11,11 @@ class LeftOuterJoinTest extends AbstractTestCase {
   public function testLeftOuterJoinJoinsArrayToResultSetReturningAllFromResultSetAndJoinsInNewField()
   {
     $groceryTypes = TestData::getGroceryTypes();
-    $groceryTypes[] = new GroceryType(7, 'Pet food');
+    $groceryTypes[] = new GroceryType(['type_id' => 7, 'name' => 'Pet food']);
     $groceryTypesRs = new ResultSet($groceryTypes);
 
     $groceryItems = TestData::getItems();
-    $groceryItems[] = new GroceryItem(11, 'Cheese', 8);
+    $groceryItems[] = new GroceryItem(['id' => 11, 'name' => 'Cheese', 'type_id' => 8]);
 
     $result = $groceryTypesRs->leftOuterJoin($groceryItems, 'items', 'id', 'typeId');
 

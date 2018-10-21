@@ -11,7 +11,7 @@ class InnerJoinTest extends AbstractTestCase {
   public function testInnerJoinJoinsArrayToResultSetReturningOnlyFromSetsThatMatch()
   {
     $groceryTypes = TestData::getGroceryTypes();
-    $groceryTypes[] = new GroceryType(7, 'Pet food');
+    $groceryTypes[] = new GroceryType(['type_id' => 7, 'name' => 'Pet food']);
 
     $groceryItems = TestData::getItems();
     $groceryItems[] = new GroceryItem(11, 'Cheese', 8);
