@@ -337,8 +337,8 @@ class ResultSet extends \ArrayObject {
       });
     } else {
       $this->uasort(function ($a, $b) use($order) {
-        $testa = (is_array($a)) ? $a[$order] : $a->$order;
-        $testb = (is_array($b)) ? $b[$order] : $b->$order;
+        $testa = static::getItemFieldValue($a, $order);
+        $testb = static::getItemFieldValue($b, $order);
         return $testa <=> $testb;
       });
     }
