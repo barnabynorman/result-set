@@ -661,5 +661,40 @@ class ResultSet extends \ArrayObject {
     return NULL;
   }
 
+  /**
+   * Returns original ResultSet with extra field containing
+   * the first matching from the supplied ResultSet / Array
+   *
+   * @param Array $joinData - the data to join with
+   * @param String $newField - the new field name to add
+   * @param Array $clauses - array formed of [local_id => join_id]
+   *
+   * @return ResultSet containing joined sets
+   */
+  public function leftOuterJoinFirst($joinData, $newField, $clauses)
+  {
+    $results = [];
+    $joinDataRs = ResultSet::getInstance($joinData);
+
+    foreach ($this as $item) {
+      $joined = new ResultSet([]);
+
+      $joinClauses = [];
+      foreach ($clauses as $localKey => $forignKey) {
+        $localFieldValue = static::getItemFieldValue($item, $localKey);
+        $joinClauses[$forignKey] = $localFieldValue;
+      }
+
+      $joined = $joinDataRs->where($joinClauses);
+
+      if ($joined->count() > 0) {
+        $item->$newField = $joined->first();
+      }
+
+      $results[] = $item;
+    }
+
+    return new ResultSet($results);
+  }
 
 }
