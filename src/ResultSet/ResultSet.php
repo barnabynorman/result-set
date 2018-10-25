@@ -454,20 +454,23 @@ class ResultSet extends \ArrayObject {
    *
    * @return ResultSet containing joined sets
    */
-  public function leftOuterJoin($joinData, $newField, $localKey, $forignKey)
+  public function leftOuterJoin($joinData, $newField, $clauses)
   {
     $results = [];
+    $joinDataRs = ResultSet::getInstance($joinData);
 
     foreach ($this as $item) {
-      $localFieldValue = static::getItemFieldValue($item, $localKey);
-      $item->$newField = [];
-      foreach ($joinData as $fData) {
-        $forignFieldValue = static::getItemFieldValue($fData, $forignKey);
+      $joined = new ResultSet([]);
 
-        if ($localFieldValue == $forignFieldValue) {
-          $item->$newField[] = $fData;
-        }
+      $joinClauses = [];
+      foreach ($clauses as $localKey => $forignKey) {
+        $localFieldValue = static::getItemFieldValue($item, $localKey);
+        $joinClauses[$forignKey] = $localFieldValue;
       }
+
+      $joined = $joinDataRs->where($joinClauses);
+      $item->$newField = $joined;
+
       $results[] = $item;
     }
 

@@ -77,6 +77,17 @@ class TestData {
   }
 
   /**
+   * @return Array of GroceryItem object instances
+   */
+  public static function getItemsWithRedApple()
+  {
+    $items = TestData::getItems();
+    $items[] = new GroceryItem([ 'id' => 12, 'name' => 'Apple',       'type_id' => 1, 'colour' => 'red']);
+
+    return $items;
+  }
+
+  /**
    * @return Array of GroceryType object instances
    */
   public static function getGroceryTypes()
@@ -90,6 +101,22 @@ class TestData {
     $groceryTypes[] = new GroceryType(['type_id' => 6, 'name' => 'Drinks']);
 
     return $groceryTypes;
+  }
+
+  /**
+   * @return Array of GroceryType object instances
+   */
+  public static function getGroceryTypesWithRedColour()
+  {
+    $redTypes = [];
+    $groceryTypes = TestData::getGroceryTypes();
+
+    foreach ($groceryTypes as $type) {
+      $type->colour = 'red';
+      $redTypes[] = $type;
+    }
+
+    return $redTypes;
   }
 
   /**
