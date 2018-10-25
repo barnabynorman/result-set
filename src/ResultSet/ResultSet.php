@@ -449,8 +449,7 @@ class ResultSet extends \ArrayObject {
    *
    * @param Array $joinData - the data to join with
    * @param String $newField - the new field name to add
-   * @param String $localKey - the name of the key from this ResultSet
-   * @param String $forignKey - the name of the remote key used to match
+   * @param Array $clauses - array formed of [local_id => join_id]
    *
    * @return ResultSet containing joined sets
    */
