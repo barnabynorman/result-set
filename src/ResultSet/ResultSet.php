@@ -90,6 +90,45 @@ class ResultSet extends \ArrayObject {
   }
 
   /**
+   * Returns a filtered ResultSet dependent any clauses passed matching
+   *
+   * Clauses in the format:
+   *  [
+   *    'fieldName' => 'value sought',
+   *    'second_or_more_fieldNames' => 'value sought'
+   *  ]
+   *
+   * @param Array of clauses
+   *
+   * @return ResultSet
+   */
+  public function whereOr($clauses)
+  {
+    $results = [];
+
+    if ((!is_array($clauses)) || (count($clauses) == 0)) {
+      return new ResultSet([]);
+    }
+
+    foreach($this as $item) {
+
+      $add = FALSE;
+      foreach ($clauses as $field => $value) {
+        $fieldValue = static::getItemFieldValue($item, $field);
+        if ($fieldValue == $value) {
+          $add = TRUE;
+        }
+      }
+
+      if ($add) {
+        $results[] = $item;
+      }
+    }
+
+    return new ResultSet($results);
+  }
+
+  /**
    * Where one or more options = value of field
    *
    * @param String Comma seperated list
