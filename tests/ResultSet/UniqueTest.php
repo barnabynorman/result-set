@@ -17,9 +17,9 @@ class UniqueTest extends AbstractTestCase {
 
     $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 3);
-    $this->assertEquals($result[0], 1);
-    $this->assertEquals($result[1], 2);
-    $this->assertEquals($result[2], 3);
+    $this->assertEquals($result[0]->number, 1);
+    $this->assertEquals($result[1]->number, 2);
+    $this->assertEquals($result[2]->number, 3);
   }
 
 }

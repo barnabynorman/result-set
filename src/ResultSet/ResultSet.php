@@ -581,8 +581,8 @@ class ResultSet extends \ArrayObject {
     $results = [];
 
     foreach ($this as $item) {
-      $value = static::getItemFieldValue($item, $field);
-      $results[$value] = $value;
+      $fieldValue = static::getItemFieldValue($item, $field);
+      $results[$fieldValue] = $item;
     }
 
     return new ResultSet(array_values($results));
