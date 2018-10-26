@@ -131,28 +131,22 @@ class ResultSet extends \ArrayObject {
   /**
    * Where one or more options = value of field
    *
-   * @param String Comma seperated list
+   * @param Array $values being saught
    *
    * @return ResultSet Filtered set
    */
-  public function whereIn($field, $options)
+  public function whereIn($field, $values)
   {
     $results = [];
 
-    $optionList = explode(',', $options);
+    if (!is_array($values)) {
+      $values = explode(',', $values);
+    }
 
-    foreach ($optionList as $value) {
-
-      foreach($this as $item) {
-        if (is_array($item)) {
-          if ($item[$field] == $value) {
-            $results[] = $item;
-          }
-        } elseif (isset($item->$field)) {
-          if ($item->$field == $value) {
-            $results[] = $item;
-          }
-        }
+    foreach($this as $item) {
+      $fieldValue = static::getItemFieldValue($item, $field);
+      if (in_array($fieldValue, $values)) {
+        $results[] = $item;
       }
     }
 
