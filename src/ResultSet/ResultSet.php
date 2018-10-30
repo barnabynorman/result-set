@@ -154,24 +154,29 @@ class ResultSet extends \ArrayObject {
   }
 
   /**
-   * Filter ResultSet by array or ResultSet of a child field
+   * Filter ResultSet by elements in child array or ResultSet
+   * whereChild() expects the field to contain an array of
+   * child items
    *
-   * @param String $fieldName in each element to filter by
+   * @param String $field containing child items
    * @param Array of clauses
    *
    * @return ResultSet
    */
-  public function whereChild($fieldName, $clauses)
+  public function whereChild($field, $clauses)
   {
     $results = [];
 
+    if ((!is_array($clauses)) || (count($clauses) == 0)) {
+      return new ResultSet([]);
+    }
+
     foreach($this as $item) {
-      if (isset($item->$fieldName)) {
-        $testSet = new ResultSet($item->$fieldName);
-        $testResult = $testSet->where($clauses);
-        if ($testResult->count() > 0) {
-          $results[] = $item;
-        }
+      $fieldValue = static::getItemFieldValue($item, $field);
+      $testResult = ResultSet::getInstance($fieldValue)->where($clauses);
+
+      if ($testResult->count() > 0) {
+        $results[] = $item;
       }
     }
 
