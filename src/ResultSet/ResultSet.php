@@ -184,6 +184,34 @@ class ResultSet extends \ArrayObject {
   }
 
   /**
+   * Filter ResultSet by elements in sub field
+   *
+   * @param String $field containing sub-field
+   * @param Array of clauses
+   *
+   * @return ResultSet
+   */
+  public function whereSubField($field, $clauses)
+  {
+    $results = [];
+
+    if ((!is_array($clauses)) || (count($clauses) == 0)) {
+      return new ResultSet([]);
+    }
+
+    foreach($this as $item) {
+      $fieldValue = static::getItemFieldValue($item, $field);
+      $testResult = ResultSet::getInstance([$fieldValue])->where($clauses);
+
+      if ($testResult->count() > 0) {
+        $results[] = $item;
+      }
+    }
+
+    return new ResultSet($results);
+  }
+
+  /**
    * Matches elements where field contains value
    *
    * @param Array of clauses
