@@ -49,4 +49,15 @@ class LikeTest extends AbstractTestCase {
     $this->assertEquals(count($result), 0);
   }
 
+  public function testFindingNonStringValues()
+  {
+    $items = TestData::getItems();
+    $itemsRs = new ResultSet($items);
+    $result = $itemsRs->like(['typeId' => 6]);
+
+    $this->assertInstanceOfResultSet($result);
+    $this->assertEquals(count($result), 1);
+    $this->assertEquals($result[0]->name, 'Beer');
+  }
+
 }
