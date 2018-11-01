@@ -8,7 +8,7 @@ use Tests\AbstractTestCase;
 
 class LikeTest extends AbstractTestCase {
 
-  public function testLikeReturnsResultSetWithTwoResultsForAto()
+  public function testMatchesCharactersInTomatoPotato()
   {
     $items = TestData::getItems();
     $itemsRs = new ResultSet($items);
@@ -20,7 +20,7 @@ class LikeTest extends AbstractTestCase {
     $this->assertEquals($result[1]->name, 'Tomato');
   }
 
-  public function testLikeReturnsResultSetWithExpectedNoOfResultsForTwoConditionsWithNoDuplicates()
+  public function testTwoConditionsWithNoDuplicates()
   {
     $items = TestData::getItemsWithTypeField();
     $itemsRs = new ResultSet($items);
@@ -39,7 +39,7 @@ class LikeTest extends AbstractTestCase {
     $this->assertEquals($tomCount, 1);
   }
 
-  public function testLikeReturnsEmptyResultSetWhenPassedEmptyTestValue()
+  public function testWhenPassedEmptyTestValue()
   {
     $items = TestData::getItems();
     $itemsRs = new ResultSet($items);
