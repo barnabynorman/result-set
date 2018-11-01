@@ -251,7 +251,7 @@ class ResultSet extends \ArrayObject {
       foreach($this as $key => $item) {
         $fieldValue = static::getItemFieldValue($item, $field);
 
-        if ((strlen($value)) && (stripos($value, $fieldValue) !== FALSE)) {
+        if ((strlen($value)) && (stripos((string)$value, (string)$fieldValue) !== FALSE)) {
           $results[] = $item;
         }
       }

@@ -21,4 +21,22 @@ class EkilTest extends AbstractTestCase {
     $this->assertEquals($result[1]->name, 'Kipper');
   }
 
+  public function testItWorksWithNumbers()
+  {
+    $nums = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    $numbers = [];
+
+    foreach ($nums as $number) {
+      $numbers[] = ['number' => $number];
+    }
+
+    $numbersRs = new ResultSet($numbers);
+
+    $para = '76553284767982674656';
+    $result = $numbersRs->ekil(['number' => $para]);
+
+    $this->assertInstanceOfResultSet($result);
+    $this->assertEquals(count($result), 8);
+  }
+
 }
