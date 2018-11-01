@@ -268,19 +268,16 @@ class ResultSet extends \ArrayObject {
    *
    * @return ResultSet
    */
-  public function likeChild($fieldName, $clauses)
+  public function likeChild($fieldName, $orClauses)
   {
     $results = [];
 
-    foreach ($clauses as $field => $value) {
-      foreach($this as $key => $item) {
-        $fieldValue = static::getItemFieldValue($item, $fieldName);
-        $fieldValueRs = ResultSet::getInstance($fieldValue);
-        $found = $fieldValueRs->like([$field => $value]);
+    foreach($this as $key => $item) {
+      $fieldValue = static::getItemFieldValue($item, $fieldName);
+      $childCount = ResultSet::getInstance($fieldValue)->like($orClauses)->count();
 
-        if ($found->count() > 0) {
-          $results[] = $item;
-        }
+      if ($childCount > 0) {
+        $results[] = $item;
       }
     }
 
