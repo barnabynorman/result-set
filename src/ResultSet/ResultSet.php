@@ -463,8 +463,6 @@ class ResultSet extends \ArrayObject {
    * @param String field to return
    *
    * @return ResultSet
-   *
-   * @todo Deal with where field contains non-scalar value
    */
   public function field($field)
   {
@@ -472,10 +470,10 @@ class ResultSet extends \ArrayObject {
 
     foreach($this as $key => $item) {
       $value = static::getItemFieldValue($item, $field);
-      $fieldValues[strtolower($value)] = $value;
+      $fieldValues[] = $value;
     }
 
-    return new ResultSet(array_values($fieldValues));
+    return new ResultSet($fieldValues);
   }
 
   /**

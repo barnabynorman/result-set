@@ -16,7 +16,7 @@ class FieldTest extends AbstractTestCase {
     $result = $peopleRs->field('lastname');
 
     $this->assertInstanceOfResultSet($result);
-    $this->assertEquals(count($result), 14);
+    $this->assertEquals(count($result), 17);
   }
 
 }
