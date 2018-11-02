@@ -8,7 +8,7 @@ use Tests\AbstractTestCase;
 
 class GreaterThanTest extends AbstractTestCase {
 
-  public function testGreaterThanReturnsAllItemsGreaterThanPassed()
+  public function testReturnsItemsGreaterThan2()
   {
     $items = TestData::getItems();
     $itemsRs = new ResultSet($items);
@@ -18,6 +18,17 @@ class GreaterThanTest extends AbstractTestCase {
     $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 4);
     $this->assertEquals($result[2]->name, 'Ketchup');
+  }
+
+  public function testBeyondValues()
+  {
+    $items = TestData::getItems();
+    $itemsRs = new ResultSet($items);
+
+    $result = $itemsRs->greaterThan(['typeId' => 10]);
+
+    $this->assertInstanceOfResultSet($result);
+    $this->assertEquals(count($result), 0);
   }
 
 }
