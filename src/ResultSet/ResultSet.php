@@ -365,13 +365,12 @@ class ResultSet extends \ArrayObject {
 
     foreach($this as $item) {
       if (is_scalar($item)) {
-        if ((stripos($item, $searchPhrase) !== FALSE) || ($item == $searchPhrase)) {
+        if (($item == $searchPhrase) || (stripos((string)$item, (string)$searchPhrase) !== FALSE)) {
           $results[] = $item;
         }
       } else {
-        $itemRs = new ResultSet($item);
-        $childSearch = $itemRs->search($searchPhrase);
-        if (count($childSearch) > 0) {
+        $childSearchCount = ResultSet::getInstance($item)->search($searchPhrase)->count();
+        if ($childSearchCount > 0) {
           $results[] = $item;
         }
       }

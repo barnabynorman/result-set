@@ -8,7 +8,7 @@ use Tests\AbstractTestCase;
 
 class SearchTest extends AbstractTestCase {
 
-  public function testSearchReturnsValuesFromAShallowSearch()
+  public function testShallowSearch()
   {
     $groceryList = TestData::getItemsWithTypeFieldJoined();
     $groceryListRs = new ResultSet($groceryList);
@@ -20,7 +20,7 @@ class SearchTest extends AbstractTestCase {
     $this->assertEquals($result[0]->name, 'Beer');
   }
 
-  public function testSearchReturnsValuesFromADeepSearch()
+  public function testDeepSearch()
   {
     $groceryList = TestData::getItemsWithTypeFieldJoined();
     $groceryListRs = new ResultSet($groceryList);
@@ -32,7 +32,7 @@ class SearchTest extends AbstractTestCase {
     $this->assertEquals($result[0]->name, 'Baked beans');
   }
 
-  public function testSearchReturnsValuesFromACaseInsensitiveSearch()
+  public function testCaseInsensitiveSearch()
   {
     $groceryList = TestData::getItemsWithTypeFieldJoined();
     $groceryListRs = new ResultSet($groceryList);
