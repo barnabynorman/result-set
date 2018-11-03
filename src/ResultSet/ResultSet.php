@@ -484,8 +484,6 @@ class ResultSet extends \ArrayObject {
    * @param Array of fields to return
    *
    * @return ResultSet of Arrays
-   *
-   * @todo Rewrite using filter()
    */
   public function fields($fieldNames = [])
   {
@@ -597,13 +595,20 @@ class ResultSet extends \ArrayObject {
    *
    * @return ResultSet
    */
-  public function unique($field)
+  public function unique($field = '')
   {
+    if (strlen($field) == 0) {
+      $unique = array_unique($this->toArray());
+      return new ResultSet($unique);
+    }
+
     $results = [];
 
     foreach ($this as $item) {
       $fieldValue = static::getItemFieldValue($item, $field);
-      $results[$fieldValue] = $item;
+      if (is_scalar($fieldValue)) {
+        $results[$fieldValue] = $item;
+      }
     }
 
     return new ResultSet(array_values($results));

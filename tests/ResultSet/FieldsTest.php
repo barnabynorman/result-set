@@ -8,7 +8,7 @@ use Tests\AbstractTestCase;
 
 class FieldsTest extends AbstractTestCase {
 
-  public function testFieldsReturnsAFilteredResultSetContainingSpecifiedFieldsFromData()
+  public function testTwoFields()
   {
     $groceryList = TestData::getItemsWithTypeLabel();
     $groceryListRs = new ResultSet($groceryList);
@@ -19,6 +19,18 @@ class FieldsTest extends AbstractTestCase {
     $this->assertEquals(count($result), 11);
     $this->assertEquals($result[0]['name'], 'Orange');
     $this->assertEquals($result[0]['type'], 'Fruit');
+  }
+
+  public function testNoFields()
+  {
+    $groceryList = TestData::getItemsWithTypeLabel();
+    $groceryListRs = new ResultSet($groceryList);
+
+    $result = $groceryListRs->fields([]);
+
+    $this->assertInstanceOfResultSet($result);
+    $this->assertEquals(count($result), 11);
+    $this->assertEquals(count($result[0]), 0);
   }
 
 }
