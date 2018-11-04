@@ -533,9 +533,8 @@ class ResultSet extends \ArrayObject {
   }
 
   /**
-   * Returns original ResultSet with extra field containing one
+   * Returns resultSet with where matching items only
    * matching from the supplied ResultSet / Array
-   * Any un-matched items will be filtered from the final ResultSet
    *
    * Note that if the supplied Set contains more than one match
    * the last match will be returned
@@ -546,19 +545,22 @@ class ResultSet extends \ArrayObject {
    *
    * @return ResultSet containing joined sets
    */
-  public function innerJoin($joinData, $newField, $localKey, $forignKey)
+  public function innerJoin($joinData, $newField, $andClauses)
   {
     $results = [];
+    $joinDataRs = ResultSet::getInstance($joinData);
 
     foreach ($this as $item) {
-      $localFieldValue = static::getItemFieldValue($item, $localKey);
-      foreach ($joinData as $fData) {
-        $forignFieldValue = static::getItemFieldValue($fData, $forignKey);
+      $joinClauses = [];
+      foreach ($andClauses as $localKey => $forignKey) {
+        $localFieldValue = static::getItemFieldValue($item, $localKey);
+        $joinClauses[$forignKey] = $localFieldValue;
+      }
 
-        if ($localFieldValue == $forignFieldValue) {
-          $item->$newField = $fData;
-          $results[] = $item;
-        }
+      $joined = $joinDataRs->where($joinClauses);
+
+      if ($joined->count() > 0) {
+        $results[] = static::setItemFieldValue($item, $newField, $joined->first());
       }
     }
 

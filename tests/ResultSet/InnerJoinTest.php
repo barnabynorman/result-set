@@ -8,7 +8,7 @@ use Tests\AbstractTestCase;
 
 class InnerJoinTest extends AbstractTestCase {
 
-  public function testInnerJoinJoinsArrayToResultSetReturningOnlyFromSetsThatMatch()
+  public function testMatchingItemsAndFilterNotMatching()
   {
     $groceryTypes = TestData::getGroceryTypes();
     $groceryTypes[] = new GroceryType(['type_id' => 7, 'name' => 'Pet food']);
@@ -17,7 +17,7 @@ class InnerJoinTest extends AbstractTestCase {
     $groceryItems[] = new GroceryItem(11, 'Cheese', 8);
     $groceryItemsRs = new ResultSet($groceryItems);
 
-    $result = $groceryItemsRs->innerJoin($groceryTypes, 'type', 'typeId', 'id');
+    $result = $groceryItemsRs->innerJoin($groceryTypes, 'type', ['typeId' => 'id']);
 
     $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 11);
