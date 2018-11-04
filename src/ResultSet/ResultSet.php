@@ -724,6 +724,17 @@ class ResultSet extends \ArrayObject {
     return NULL;
   }
 
+  protected static function setItemFieldValue($item, $field, $value)
+  {
+    if (is_object($item)) {
+      $item->$field = $value;
+    } elseif (is_array($item)) {
+      $item[$field] = $value;
+    }
+
+    return $item;
+  }
+
   /**
    * Returns original ResultSet with extra field containing
    * the first matching from the supplied ResultSet / Array
