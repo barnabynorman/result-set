@@ -46,6 +46,11 @@ class NumberObj {
   {
     $this->number += 10;
   }
+
+  public function makeSmaller()
+  {
+    $this->number -= 10;
+  }
 }
 
 /**
