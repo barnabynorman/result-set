@@ -673,13 +673,15 @@ class ResultSet extends \ArrayObject {
    * @param String $paramName - name of argument of function
    * @param Function $function - a closure function
    *
-   * @return Void
+   * @return ResultSet
    */
   public function each($paramName, $function)
   {
     foreach ($this as $$paramName) {
       $function($$paramName);
     }
+
+    return $this;
   }
 
   /**
