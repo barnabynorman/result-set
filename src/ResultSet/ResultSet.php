@@ -218,11 +218,15 @@ class ResultSet extends \ArrayObject {
    *
    * @return ResultSet
    */
-  public function like($clauses)
+  public function like($orClauses)
   {
     $results = [];
 
-    foreach ($clauses as $field => $value) {
+    if (!is_array($orClauses)) {
+      $orClauses = [];
+    }
+
+    foreach ($orClauses as $field => $value) {
       foreach($this as $key => $item) {
         $fieldValue = static::getItemFieldValue($item, $field);
 
