@@ -59,22 +59,22 @@ class ResultSet extends \ArrayObject {
    *
    * Clauses in the format: ['fieldName' => 'value sought']
    *
-   * @param Array of clauses
+   * @param Array of andClauses - all conditions must be met
    *
    * @return ResultSet
    */
-  public function where($clauses)
+  public function where($andClauses)
   {
     $results = [];
 
-    if ((!is_array($clauses)) || (count($clauses) == 0)) {
+    if ((!is_array($andClauses)) || (count($andClauses) == 0)) {
       return new ResultSet([]);
     }
 
     foreach($this as $item) {
 
       $add = TRUE;
-      foreach ($clauses as $field => $value) {
+      foreach ($andClauses as $field => $value) {
         $fieldValue = static::getItemFieldValue($item, $field);
         if ($fieldValue != $value) {
           $add = FALSE;
@@ -98,22 +98,22 @@ class ResultSet extends \ArrayObject {
    *    'second_or_more_fieldNames' => 'value sought'
    *  ]
    *
-   * @param Array of clauses
+   * @param Array of orClauses - any condition can be met
    *
    * @return ResultSet
    */
-  public function whereOr($clauses)
+  public function whereOr($orClauses)
   {
     $results = [];
 
-    if ((!is_array($clauses)) || (count($clauses) == 0)) {
+    if ((!is_array($orClauses)) || (count($orClauses) == 0)) {
       return new ResultSet([]);
     }
 
     foreach($this as $item) {
 
       $add = FALSE;
-      foreach ($clauses as $field => $value) {
+      foreach ($orClauses as $field => $value) {
         $fieldValue = static::getItemFieldValue($item, $field);
         if ($fieldValue == $value) {
           $add = TRUE;
@@ -159,21 +159,21 @@ class ResultSet extends \ArrayObject {
    * child items
    *
    * @param String $field containing child items
-   * @param Array of clauses
+   * @param Array andClauses - All conditions must be met to return the item
    *
    * @return ResultSet
    */
-  public function whereChild($field, $clauses)
+  public function whereChild($field, $andClauses)
   {
     $results = [];
 
-    if ((!is_array($clauses)) || (count($clauses) == 0)) {
+    if ((!is_array($andClauses)) || (count($andClauses) == 0)) {
       return new ResultSet([]);
     }
 
     foreach($this as $item) {
       $fieldValue = static::getItemFieldValue($item, $field);
-      $testResult = ResultSet::getInstance($fieldValue)->where($clauses);
+      $testResult = ResultSet::getInstance($fieldValue)->where($andClauses);
 
       if ($testResult->count() > 0) {
         $results[] = $item;
@@ -187,21 +187,21 @@ class ResultSet extends \ArrayObject {
    * Filter ResultSet by elements in sub field
    *
    * @param String $field containing sub-field
-   * @param Array of clauses
+   * @param Array of andClauses
    *
    * @return ResultSet
    */
-  public function whereSubField($field, $clauses)
+  public function whereSubField($field, $andClauses)
   {
     $results = [];
 
-    if ((!is_array($clauses)) || (count($clauses) == 0)) {
+    if ((!is_array($andClauses)) || (count($andClauses) == 0)) {
       return new ResultSet([]);
     }
 
     foreach($this as $item) {
       $fieldValue = static::getItemFieldValue($item, $field);
-      $testResult = ResultSet::getInstance([$fieldValue])->where($clauses);
+      $testResult = ResultSet::getInstance([$fieldValue])->where($andClauses);
 
       if ($testResult->count() > 0) {
         $results[] = $item;
@@ -214,7 +214,7 @@ class ResultSet extends \ArrayObject {
   /**
    * Matches elements where field contains value
    *
-   * @param Array of clauses
+   * @param Array orClauses - any conditions can be met to return the item
    *
    * @return ResultSet
    */
@@ -243,15 +243,15 @@ class ResultSet extends \ArrayObject {
    * Backwards like
    * Similar to like() but looks for match from items in value passed
    *
-   * @param Array of clauses
+   * @param Array orClauses - any conditions can be met to return the item
    *
    * @return ResultSet
    */
-  public function ekil($clauses)
+  public function ekil($orClauses)
   {
     $results = [];
 
-    foreach ($clauses as $field => $value) {
+    foreach ($orClauses as $field => $value) {
       foreach($this as $key => $item) {
         $fieldValue = static::getItemFieldValue($item, $field);
 
@@ -268,7 +268,7 @@ class ResultSet extends \ArrayObject {
    * Matches elements where field contains value from child array / ResultSet
    *
    * @param String $fieldName in each element to filter by
-   * @param Array of clauses
+   * @param Array orClauses - any condition can be met to return the item being tested
    *
    * @return ResultSet
    */
@@ -749,20 +749,18 @@ class ResultSet extends \ArrayObject {
    *
    * @param Array $joinData - the data to join with
    * @param String $newField - the new field name to add
-   * @param Array $clauses - array formed of [local_id => join_id]
+   * @param Array $andClauses - array formed of [local_id => join_id]
    *
    * @return ResultSet containing joined sets
    */
-  public function leftOuterJoinFirst($joinData, $newField, $clauses)
+  public function leftOuterJoinFirst($joinData, $newField, $andClauses)
   {
     $results = [];
     $joinDataRs = ResultSet::getInstance($joinData);
 
     foreach ($this as $item) {
-      $joined = new ResultSet([]);
-
       $joinClauses = [];
-      foreach ($clauses as $localKey => $forignKey) {
+      foreach ($andClauses as $localKey => $forignKey) {
         $localFieldValue = static::getItemFieldValue($item, $localKey);
         $joinClauses[$forignKey] = $localFieldValue;
       }
