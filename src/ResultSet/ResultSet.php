@@ -797,4 +797,26 @@ class ResultSet extends \ArrayObject {
     return new ResultSet($results);
   }
 
+  public function joinFields($joinData, $newFields, $localKey, $forignKey)
+  {
+    $results = [];
+
+    foreach ($this as $item) {
+      $localFieldValue = static::getItemFieldValue($item, $localKey);
+      foreach ($joinData as $fData) {
+        $forignFieldValue = static::getItemFieldValue($fData, $forignKey);
+
+        if ($localFieldValue == $forignFieldValue) {
+          foreach ($newFields as $field => $newFieldName) {
+            $item->$newFieldName = static::getItemFieldValue($fData, $field);
+          }
+
+          $results[] = $item;
+        }
+      }
+    }
+
+    return new ResultSet($results);
+  }
+
 }
