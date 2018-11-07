@@ -131,7 +131,7 @@ class ResultSet extends \ArrayObject {
   /**
    * Where one or more options = value of field
    *
-   * @param Array $values being saught
+   * @param Mixed $values - Array or coma-seperated String of values being saught
    *
    * @return ResultSet Filtered set
    */
@@ -642,8 +642,8 @@ class ResultSet extends \ArrayObject {
    * Filters objects between positions
    * Note that the ResultSet counts from 0
    *
-   * @param Integer starting point
-   * @param Integer end point
+   * @param Integer $start - The position in the resultSet (counting from 0) of the first item
+   * @param Integer $end - The position in the resultSet (counting from 0) of the last item
    *
    * @return ResultSet
    */
