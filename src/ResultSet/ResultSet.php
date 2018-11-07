@@ -832,4 +832,17 @@ class ResultSet extends \ArrayObject {
     return new ResultSet($results);
   }
 
+  public function subField($field, $childField)
+  {
+    $fieldValues = [];
+
+    foreach($this as $key => $item) {
+      $fieldValue = static::getItemFieldValue($item, $field);
+      $childValue = static::getItemFieldValue($fieldValue, $childField);
+      $fieldValues[] = $childValue;
+    }
+
+    return new ResultSet($fieldValues);
+  }
+
 }
