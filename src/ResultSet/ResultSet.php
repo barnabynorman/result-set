@@ -819,4 +819,17 @@ class ResultSet extends \ArrayObject {
     return new ResultSet($results);
   }
 
+  public function setKeysFromField($field)
+  {
+    $results = [];
+
+    foreach($this as $item) {
+      $fieldValue = static::getItemFieldValue($item, $field);
+      $keyName = strtolower(str_replace(' ', '_', $fieldValue));
+      $results[$keyName] = $item;
+    }
+
+    return new ResultSet($results);
+  }
+
 }
