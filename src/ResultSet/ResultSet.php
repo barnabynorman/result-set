@@ -316,16 +316,26 @@ class ResultSet extends \ArrayObject {
    *
    * @return ResultSet
    */
-  public function greaterThan($clauses)
+  public function greaterThan($andClauses)
   {
     $results = [];
 
-    foreach ($clauses as $fieldName => $value) {
-      foreach($this as $item) {
-        $fieldValue = static::getItemFieldValue($item, $fieldName);
-        if ($fieldValue > $value) {
-            $results[] = $item;
+    if ((!is_array($andClauses)) || (count($andClauses) == 0)) {
+      return new ResultSet([]);
+    }
+
+    foreach($this as $item) {
+
+      $add = TRUE;
+      foreach ($andClauses as $field => $value) {
+        $fieldValue = static::getItemFieldValue($item, $field);
+        if (($fieldValue == $value) || ($fieldValue < $value)) {
+          $add = FALSE;
         }
+      }
+
+      if ($add) {
+        $results[] = $item;
       }
     }
 
