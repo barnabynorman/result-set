@@ -505,7 +505,7 @@ class ResultSet extends \ArrayObject {
    * the specified fields as a ResultSet of Arrays
    * containing the fields and their values
    *
-   * @param Array of fields to return
+   * @param Array of fields to return - passing an array as a field will include a subfields
    *
    * @return ResultSet of Arrays
    */
@@ -516,7 +516,20 @@ class ResultSet extends \ArrayObject {
     foreach($this as $key => $item) {
       $justFieldsItem = [];
       foreach($fieldNames as $field) {
-        $fieldValue = static::getItemFieldValue($item, $field);
+
+        if (is_array($field)) {
+          $child = static::getItemFieldValue($item, key($field));
+          $field = reset($field);
+          if (is_array($field)) {
+            $alias = key($field);
+            $field = reset($field);
+          }
+          $fieldValue = static::getItemFieldValue($child, $field);
+          $field = $alias ?? $field;
+        } else {
+          $fieldValue = static::getItemFieldValue($item, $field);
+        }
+
         $justFieldsItem[$field] = $fieldValue;
       }
       $results[] = $justFieldsItem;
