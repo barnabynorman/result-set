@@ -810,4 +810,26 @@ class ResultSet extends \ArrayObject {
     return new ResultSet($results);
   }
 
+  /**
+   * Set the key for each item to be made from a field value
+   * Spaces are replaced with underscores
+   * The key will be lower-case
+   *
+   * @param String $field - the field to take the value from
+   *
+   * @return ResultSet
+   */
+  public function setKeysFromField($field)
+  {
+    $results = [];
+
+    foreach($this as $item) {
+      $fieldValue = static::getItemFieldValue($item, $field);
+      $keyName = strtolower(str_replace(' ', '_', $fieldValue));
+      $results[$keyName] = $item;
+    }
+
+    return new ResultSet($results);
+  }
+
 }
