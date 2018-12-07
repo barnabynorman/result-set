@@ -832,4 +832,30 @@ class ResultSet extends \ArrayObject {
     return new ResultSet($results);
   }
 
+  /**
+   * Returns resultSet randomly selected
+   *
+   * @param Integer $number of items to return
+   *
+   * @return ResultSet
+   */
+  public function rand($number = 1)
+  {
+    if ($number > $this->count()) {
+      $number = $this->count();
+    }
+
+    $ids = array_rand($this->toArray(), $number);
+
+    $ids = (is_array($ids)) ? $ids : [$ids];
+
+    $results = [];
+
+    foreach ($ids as $id) {
+      $results[] = $this[$id];
+    }
+
+    return new ResultSet($results);
+  }
+
 }
