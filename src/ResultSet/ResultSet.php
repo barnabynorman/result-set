@@ -858,4 +858,40 @@ class ResultSet extends \ArrayObject {
     return new ResultSet($results);
   }
 
+  /**
+   * Returns a filtered ResultSet dependent on clauses passed
+   * Includes all results that are not in the clauses
+   *
+   * Clauses in the format: ['fieldName' => 'value sought']
+   *
+   * @param Array of andClauses - all conditions must be met
+   *
+   * @return ResultSet
+   */
+  public function whereNot($andClauses)
+  {
+    $results = [];
+
+    if ((!is_array($andClauses)) || (count($andClauses) == 0)) {
+      return $this;
+    }
+
+    foreach($this as $item) {
+
+      $add = TRUE;
+      foreach ($andClauses as $field => $value) {
+        $fieldValue = static::getItemFieldValue($item, $field);
+        if ($fieldValue == $value) {
+          $add = FALSE;
+        }
+      }
+
+      if ($add) {
+        $results[] = $item;
+      }
+    }
+
+    return new ResultSet($results);
+  }
+
 }
