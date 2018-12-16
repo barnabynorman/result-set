@@ -894,4 +894,32 @@ class ResultSet extends \ArrayObject {
     return new ResultSet($results);
   }
 
+  /**
+   * Filter resultSet by elements in child resultSet
+   * whereChildNot() excludes any item where the child matches
+   *
+   * @param String $field containing child items
+   * @param Array andClauses - All conditions must be met to return the item
+   *
+   * @return ResultSet
+   */
+  public function whereChildNot($field, $andClauses)
+  {
+    $results = [];
+
+    if ((!is_array($andClauses)) || (count($andClauses) == 0)) {
+      return $this;
+    }
+
+    foreach($this as $item) {
+      $fieldValue = static::getItemFieldValue($item, $field);
+      $testResult = static::getInstance($fieldValue)->where($andClauses);
+
+      if ($testResult->count() == 0) {
+        $results[] = $item;
+      }
+    }
+
+    return new ResultSet($results);
+  }
 }
