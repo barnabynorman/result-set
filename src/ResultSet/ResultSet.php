@@ -754,6 +754,14 @@ class ResultSet extends \ArrayObject {
     return $this;
   }
 
+  /**
+   * Get value from field in item
+   *
+   * @param Mixed item to get value from
+   * @param String name of field to return
+   *
+   * @return Mixed
+   */
   protected static function getItemFieldValue($item, $field)
   {
     if (((is_array($item)) || (is_subclass_of($item, 'ArrayObject'))) && (isset($item[$field]))) {
@@ -765,6 +773,15 @@ class ResultSet extends \ArrayObject {
     return NULL;
   }
 
+  /**
+   * Set value in field on item
+   *
+   * @param Mixed item to set value on
+   * @param String name of field to set
+   * @param Mixed value to set
+   *
+   * @return Mixed
+   */
   protected static function setItemFieldValue($item, $field, $value)
   {
     if (is_object($item)) {
