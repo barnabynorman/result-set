@@ -2,7 +2,12 @@
 
 namespace ResultSet;
 
-class ResultSet extends \ArrayObject {
+use ResultSet\Traits\First;
+use ArrayObject;
+
+class ResultSet extends ArrayObject implements ResultSetInterface {
+
+  use First;
 
   /**
    * Create an instance of ResultSet
@@ -44,15 +49,6 @@ class ResultSet extends \ArrayObject {
     return new ResultSet($data);
   }
 
-  /**
-   * Returns the first element in the ResultSet
-   *
-   * @return Object the data stored in the ResultSet
-   */
-  public function first()
-  {
-    return reset($this);
-  }
 
   /**
    * Returns a filtered ResultSet dependent on clauses passed
