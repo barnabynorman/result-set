@@ -939,4 +939,41 @@ class ResultSet extends \ArrayObject {
 
     return new ResultSet($results);
   }
+
+  /**
+   * An inner join with results more like traditinal inner join where
+   * all columns appear in the same row
+   *
+   * @param Array $joinData - the data to join with
+   * @param Array $newFields - formed of [field => label] for each field
+   * @param Array $clauses - formed of [local_id => join_id]
+   */
+  public function joinFields($joinData, $newFields, $andClauses)
+  {
+    $results = [];
+    $joinDataRs = ResultSet::getInstance($joinData);
+
+    foreach ($this as $item) {
+      $joinClauses = [];
+      foreach ($andClauses as $localKey => $forignKey) {
+        $localFieldValue = static::getItemFieldValue($item, $localKey);
+        $joinClauses[$forignKey] = $localFieldValue;
+      }
+
+      $joined = $joinDataRs->where($joinClauses);
+
+      if ($joined->count() > 0) {
+        $joinData = $joined->first();
+
+        foreach ($newFields as $field => $name) {
+          $fieldVal = static::getItemFieldValue($joinData, $field);
+          $item = static::setItemFieldValue($item, $name, $fieldVal);
+        }
+        $results[] = $item;
+      }
+    }
+
+    return new ResultSet($results);
+  }
+
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace Tests\ResultSet;
+
 /**
  * Contains single instance of a grocery item
  */
@@ -50,6 +51,29 @@ class NumberObj {
   public function makeSmaller()
   {
     $this->number -= 10;
+  }
+}
+
+/**
+ * Person class
+ */
+class Person {
+  public function __construct($data) {
+    $this->id = $data['id'];
+    $this->firstname = $data['firstname'];
+    $this->lastname = $data['lastname'];
+  }
+}
+
+/**
+ * Defines profile data to extend person
+ */
+class Profile {
+  public function __construct($data) {
+    $this->person_id = $data['person_id'];
+    $this->height = $data['height'];
+    $this->eye_colour = $data['eye_colour'];
+    $this->pb = $data['pb'];
   }
 }
 
@@ -260,6 +284,45 @@ class TestData {
     ];
 
     return $cssColours;
+  }
+
+  /**
+   * Returns profile data for joining with people
+   */
+  public static function getProfileData()
+  {
+    $profile = [];
+    $profile[] = new Profile([ "person_id" => "3", "height" => "175", "eye_colour" => "blue", "pb" => "23:59" ]);
+    $profile[] = new Profile([ "person_id" => "5", "height" => "170", "eye_colour" => "green", "pb" => "22:05" ]);
+    $profile[] = new Profile([ "person_id" => "6", "height" => "170", "eye_colour" => "brown", "pb" => "21:04" ]);
+    $profile[] = new Profile([ "person_id" => "9", "height" => "191", "eye_colour" => "green", "pb" => "33:28" ]);
+    $profile[] = new Profile([ "person_id" => "12", "height" => "180", "eye_colour" => "blue", "pb" => "31:03" ]);
+
+    return $profile;
+  }
+
+  public static function getPeopleWithId()
+  {
+    $people = [];
+    $people[] = new Person([ "id" => "1", "firstname" => "Bob", "lastname" => "Smith" ]);
+    $people[] = new Person([ "id" => "2", "firstname" => "Joanne", "lastname" => "Hague" ]);
+    $people[] = new Person([ "id" => "3", "firstname" => "Sophia", "lastname" => "Ovchinin" ]);
+    $people[] = new Person([ "id" => "4", "firstname" => "Amelia", "lastname" => "Smith" ]);
+    $people[] = new Person([ "id" => "5", "firstname" => "Lily", "lastname" => "Jones" ]);
+    $people[] = new Person([ "id" => "6", "firstname" => "Emily", "lastname" => "Walsh" ]);
+    $people[] = new Person([ "id" => "7", "firstname" => "Ava", "lastname" => "Humphries" ]);
+    $people[] = new Person([ "id" => "8", "firstname" => "Isla", "lastname" => "Francis" ]);
+    $people[] = new Person([ "id" => "9", "firstname" => "Muhammed", "lastname" => "Boyce" ]);
+    $people[] = new Person([ "id" => "10", "firstname" => "Oliver", "lastname" => "Jones" ]);
+    $people[] = new Person([ "id" => "11", "firstname" => "Noah", "lastname" => "Clifton" ]);
+    $people[] = new Person([ "id" => "12", "firstname" => "George", "lastname" => "Shephard" ]);
+    $people[] = new Person([ "id" => "13", "firstname" => "Harry", "lastname" => "Middleton" ]);
+    $people[] = new Person([ "id" => "14", "firstname" => "Charlie", "lastname" => "Smith" ]);
+    $people[] = new Person([ "id" => "15", "firstname" => "Jack", "lastname" => "Brooksbank" ]);
+    $people[] = new Person([ "id" => "16", "firstname" => "Freddie", "lastname" => "Cabot" ]);
+    $people[] = new Person([ "id" => "17", "firstname" => "Alfie", "lastname" => "Conner" ]);
+
+    return $people;
   }
 
 }
