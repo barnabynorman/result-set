@@ -976,4 +976,25 @@ class ResultSet extends \ArrayObject {
     return new ResultSet($results);
   }
 
+  /**
+   * Get the value from a subfield
+   *
+   * @param String $field in the idtem containing the value
+   * @param String $subField in the items field
+   *
+   * @return ResultSet
+   */
+  public function subField($field, $subField)
+  {
+    $fieldValues = [];
+
+    foreach($this as $key => $item) {
+      $fieldValue = static::getItemFieldValue($item, $field);
+      $childValue = static::getItemFieldValue($fieldValue, $subField);
+      $fieldValues[] = $childValue;
+    }
+
+    return new ResultSet($fieldValues);
+  }
+
 }
