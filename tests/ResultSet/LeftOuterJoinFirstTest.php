@@ -19,7 +19,6 @@ class LeftOuterJoinFirstTest extends AbstractTestCase {
 
     $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 11);
-    $this->assertEquals(count($result[0]->type), 1);
     $this->assertEquals($result[0]->type->name, 'Fruit');
   }
 
@@ -34,7 +33,6 @@ class LeftOuterJoinFirstTest extends AbstractTestCase {
 
     $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 11);
-    $this->assertNotEquals(count($result[0]->type), 1);
   }
 
 }
