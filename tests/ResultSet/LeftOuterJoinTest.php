@@ -20,7 +20,7 @@ class LeftOuterJoinTest extends AbstractTestCase {
     $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 6);
     $this->assertEquals(count($result[0]->items), 4);
-    $this->assertEquals(count($result[6]->items), 0);
+    $this->assertEquals(count($result[5]->items), 1);
   }
 
   public function testAddsNothingForNewType()
@@ -52,7 +52,7 @@ class LeftOuterJoinTest extends AbstractTestCase {
     $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 6);
     $this->assertEquals(count($result[0]->items), 4);
-    $this->assertEquals(count($result[6]->items), 0);
+    $this->assertEquals(count($result[5]->items), 1);
   }
 
   public function testJoinWithExtraClause()
