@@ -21,7 +21,7 @@ class InnerJoinTest extends AbstractTestCase {
 
     $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 11);
-    $this->assertNotEquals(count($result->groceryItems), count($result));
+    $this->assertNotEquals(count($groceryItems), count($result));
   }
 
 }
