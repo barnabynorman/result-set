@@ -131,7 +131,6 @@ class SubFieldTest extends AbstractTestCase {
 
     $this->assertInstanceOfResultSet($result);
     $this->assertEquals(count($result), 11);
-    $this->assertEquals(count($result[0]), 1);
     $this->assertEquals($result[0], 'Fruit');
   }
 
