@@ -51,7 +51,8 @@ class ResultSet extends \ArrayObject {
    */
   public function first()
   {
-    return reset($this);
+    $iterator = $this->getIterator();
+    return $iterator->current();
   }
 
   /**

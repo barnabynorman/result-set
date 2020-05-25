@@ -18,4 +18,23 @@ class FirstTest extends AbstractTestCase {
     $this->assertNotInstanceOfResultSet($result);
   }
 
+  public function testFirstWithNoData()
+  {
+    $data = [];
+    $rs = new ResultSet($data);
+
+    $result = $rs->first();
+    $this->assertEquals($result, FALSE);
+  }
+
+  public function testFirstWithNonZeroFirstEntryKey()
+  {
+    $data = ['one', 'two', 'three'];
+    unset($data[0]);
+    $rs = new ResultSet($data);
+
+    $result = $rs->first();
+    $this->assertEquals($result, 'two');
+  }
+
 }
