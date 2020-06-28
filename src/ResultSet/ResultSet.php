@@ -660,6 +660,28 @@ class ResultSet extends \ArrayObject {
   }
 
   /**
+   * Degrades ResultSet into JSON string
+   * Each item is returned as an object
+   * with id provided by the 'id' field
+   * which can be optionally specified
+   *
+   * @return JSON
+   */
+  public function toJsonRecords($id = 'id')
+  {
+    $data = $this->toArray();
+
+    $records = [];
+
+    foreach ($data as $row) {
+      $idValue = static::getItemFieldValue($row, $id);
+      $records[$idValue] = $row;
+    }
+
+    return json_encode($records);
+  }
+
+  /**
    * Ensures that the contents of the ResultSet
    * are unique by a field specified as a key
    *
