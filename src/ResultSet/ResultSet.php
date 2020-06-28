@@ -540,6 +540,40 @@ class ResultSet extends \ArrayObject {
   }
 
   /**
+   * Filters the contained objects to only return
+   * the specified fields as a ResultSet of Arrays
+   * containing the fields and their values.
+   * Each field is aliased
+   *
+   * @param Array of fields and their aliases
+   *
+   * @return ResultSet of Arrays
+   */
+  public function fieldsAs($fieldNames = [])
+  {
+    $results = [];
+
+    foreach($this as $key => $item) {
+      $justFieldsItem = [];
+      foreach($fieldNames as $field) {
+
+        if (is_array($field)) {
+          $key = key($field);
+          $fieldValue = static::getItemFieldValue($item, $key);
+          $field = reset($field);
+        } else {
+          $fieldValue = static::getItemFieldValue($item, $field);
+        }
+
+        $justFieldsItem[$field] = $fieldValue;
+      }
+      $results[] = $justFieldsItem;
+    }
+
+    return new ResultSet($results);
+  }
+
+  /**
    * Returns original ResultSet with extra field containing array of
    * all matching from the supplied ResultSet / Array
    *
