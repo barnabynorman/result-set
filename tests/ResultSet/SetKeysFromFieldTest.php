@@ -25,16 +25,13 @@ class SetKeysFromFieldTest extends AbstractTestCase {
     $itemsRs = ResultSet::getInstance($items);
 
     $result = $itemsRs->setKeysFromField('name');
-
     $this->assertInstanceOfResultSet($result);
 
-    $firstItem = reset($result);
-    $key = key($result);
-    $this->assertEquals($key, 'orange');
+    $resultAsArray = $result->toArray();
+    $this->assertTrue(is_array($resultAsArray));
 
-    $lastItem = end($result);
-    $key = key($result);
-    $this->assertEquals($key, 'beer');
+    $keys = ['orange', 'apple', 'pear', 'potato', 'pepper', 'tomato'];
+    $this->assertEquals(array_keys($resultAsArray),$keys);
   }
 
   public function testWithSpaceInValue()
@@ -47,10 +44,13 @@ class SetKeysFromFieldTest extends AbstractTestCase {
     $itemsRs = ResultSet::getInstance($items);
 
     $result = $itemsRs->setKeysFromField('name');
+    $this->assertInstanceOfResultSet($result);
 
-    $firstItem = reset($result);
-    $key = key($result);
-    $this->assertEquals($key, 'baked_beans');
+    $resultAsArray = $result->toArray();
+    $this->assertTrue(is_array($resultAsArray));
+
+    $keys = ['baked_beans', 'ketchup', 'beer'];
+    $this->assertEquals(array_keys($resultAsArray),$keys);
   }
 
 }
