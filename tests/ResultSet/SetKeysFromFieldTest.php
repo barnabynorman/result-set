@@ -16,11 +16,6 @@ class SetKeysFromFieldTest extends AbstractTestCase {
     $items[] = new GroceryItem([ "type_id" => "", "colour" => "", "id" => "4", "name" => "Potato" ]);
     $items[] = new GroceryItem([ "type_id" => "", "colour" => "", "id" => "5", "name" => "Pepper" ]);
     $items[] = new GroceryItem([ "type_id" => "", "colour" => "", "id" => "6", "name" => "Tomato" ]);
-    $items[] = new GroceryItem([ "type_id" => "", "colour" => "", "id" => "7", "name" => "Celery" ]);
-    $items[] = new GroceryItem([ "type_id" => "", "colour" => "", "id" => "8", "name" => "Kipper" ]);
-    $items[] = new GroceryItem([ "type_id" => "", "colour" => "", "id" => "9", "name" => "Baked beans" ]);
-    $items[] = new GroceryItem([ "type_id" => "", "colour" => "", "id" => "10", "name" => "Ketchup" ]);
-    $items[] = new GroceryItem([ "type_id" => "", "colour" => "", "id" => "11", "name" => "Beer" ]);
 
     $itemsRs = ResultSet::getInstance($items);
 
