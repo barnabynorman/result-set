@@ -45,6 +45,66 @@ class ResultSet extends \ArrayObject {
   }
 
   /**
+   * Creates a loaded instance of ResultSet based on data in
+   * the CSV file specified in the filePath parameter
+   *
+   * @param String $filePath - path to CSV file
+   * @param Integer $headings - optional heading row (default 1) - previous rows are ignored
+   *
+   * @return ResultSet instance
+   */
+  public static function getFromCsvFile ($filePath, $headings = 1) {
+    $csvFile = [];
+    if (($handle = fopen($filePath, 'r')) !== FALSE) {
+      while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+        $csvFile[] = $data;
+      }
+
+      fclose($handle);
+    }
+
+    $fields = [];
+    if (is_integer($headings) && $headings > 0) {
+
+      if ($headings >= count ($csvFile)) {
+        return new ResultSet([]);
+      }
+
+      for ($rowCount = 0; $rowCount < $headings; $rowCount++) {
+        $fields = array_shift($csvFile);
+      }
+
+    } else {
+      $row = array_shift($csvFile);
+
+      $fields = array_keys($row);
+
+      array_unshift($csvFile, $row);
+    }
+
+    foreach ($fields as $id => $name) {
+      $name = trim(str_replace(' ', '_', $name));
+      if (strlen($name) > 0) {
+        $fields[$id] = $name;
+      }
+    }
+
+    $items = [];
+
+    foreach ($csvFile as $cols) {
+      $record = [];
+      foreach ($fields as $id => $fieldName) {
+        if (isset($cols[$id])) {
+          $record[$fieldName] = trim($cols[$id]);
+        }
+      }
+      $items[] = new ResultSet($record);
+    }
+
+    return new ResultSet($items);
+  }
+
+  /**
    * Returns the first element in the ResultSet
    *
    * @return Object the data stored in the ResultSet
