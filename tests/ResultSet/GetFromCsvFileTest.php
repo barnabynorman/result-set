@@ -9,7 +9,7 @@ class GetFromCsvFileTest extends AbstractTestCase {
 
   public function testReturnsResultSet()
   {
-    $rs = ResultSet::getFromCsvFile('./testDataHeadingsFirstRow.csv');
+    $rs = ResultSet::getFromCsvFile('./tests/ResultSet/testDataHeadingsFirstRow.csv');
     $this->assertInstanceOfResultSet($rs);
   }
 
@@ -24,7 +24,7 @@ class GetFromCsvFileTest extends AbstractTestCase {
 
     $expected = new ResultSet($testData);
 
-    $rs = ResultSet::getFromCsvFile('./testDataHeadingsFirstRow.csv');
+    $rs = ResultSet::getFromCsvFile('./tests/ResultSet/testDataHeadingsFirstRow.csv');
 
     $this->assertEquals($rs, $expected);
   }
@@ -40,7 +40,7 @@ class GetFromCsvFileTest extends AbstractTestCase {
 
     $expected = new ResultSet($testData);
 
-    $rs = ResultSet::getFromCsvFile('./testDataNoHeadings.csv', FALSE);
+    $rs = ResultSet::getFromCsvFile('./tests/ResultSet/testDataNoHeadings.csv', FALSE);
 
     $this->assertEquals($rs, $expected);
   }
@@ -56,7 +56,7 @@ class GetFromCsvFileTest extends AbstractTestCase {
 
     $expected = new ResultSet($testData);
 
-    $rs = ResultSet::getFromCsvFile('./testDataHeadingsSecondRow.csv', 2);
+    $rs = ResultSet::getFromCsvFile('./tests/ResultSet/testDataHeadingsSecondRow.csv', 2);
 
     $this->assertEquals($rs, $expected);
   }
@@ -67,7 +67,7 @@ class GetFromCsvFileTest extends AbstractTestCase {
 
     $expected = new ResultSet($testData);
 
-    $rs = ResultSet::getFromCsvFile('./testNoData.csv', 2);
+    $rs = ResultSet::getFromCsvFile('./tests/ResultSet/testNoData.csv', 2);
 
     $this->assertEquals($rs, $expected);
   }
