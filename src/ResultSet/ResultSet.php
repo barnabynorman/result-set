@@ -769,6 +769,54 @@ class ResultSet extends \ArrayObject {
   }
 
   /**
+   * Ensures that the contents of the ResultSet
+   * are unique by all fields specified.
+   *
+   * Resuls will only contain non-duplicate records
+   *
+   * The result will fail when duplicates are found
+   * and onErrorStop is set to true
+   *
+   * @param Array fields to use as unique key
+   * @param Bool optional end when duplicate found
+   *
+   * @return ResultSet
+   */
+  public function uniqueFields($fields = '', $onErrorStop = FALSE)
+  {
+    if (!is_array($fields) && strlen($fields) == 0) {
+      die("uniqueFields - Please specify at least one field\n");
+    }
+
+    if (!is_array($fields)) {
+      $fields = [$fields];
+    }
+
+    foreach ($fields as $field) {
+      $results = [];
+
+      foreach ($this as $key => $item) {
+        $fieldValue = static::getItemFieldValue($item, $field);
+        if (is_scalar($fieldValue)) {
+          if (isset($results[$fieldValue]) && $onErrorStop) {
+            echo sprintf("Duplicate: field: %s with value: %s\n", $field, $fieldValue);
+            die;
+          } elseif (isset($results[$fieldValue])) {
+            unset($this[$key]);
+          } else {
+            $results[$fieldValue] = $item;
+          }
+        } else {
+          return new ResultSet([]);
+        }
+      }
+    }
+
+    return $this;
+  }
+
+
+  /**
    * Filters objects between positions
    * Note that the ResultSet counts from 0
    *
