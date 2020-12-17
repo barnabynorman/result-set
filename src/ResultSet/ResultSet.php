@@ -887,6 +887,33 @@ class ResultSet extends \ArrayObject {
   }
 
   /**
+   * Useses a supplied function to be run against
+   * each item in the ResultSet, creating a new
+   * ResultSet where items are only included where
+   * the function returns TRUE
+   *
+   * Note to include or return other parameters in the closure
+   * append the $function structure with "use ($myParameterName)"
+   *
+   * @param String $paramName - name of argument of function
+   * @param Function $function - a closure function
+   *
+   * @return ResultSet
+   */
+  public function filter($itemName, $function)
+  {
+    $results = [];
+
+    foreach ($this as $key => $$itemName) {
+      if($function($$itemName)) {
+        $results[$key] = $$itemName;
+      }
+    }
+
+    return new ResultSet($results);
+  }
+
+  /**
    * Calls method specified on each item in ResultSet
    * Note that the method will ignore any item that
    * does not support the method passed without error!
