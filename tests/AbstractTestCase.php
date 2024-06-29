@@ -7,12 +7,12 @@ use PHPUnit\Framework\TestCase;
 
 abstract class AbstractTestCase extends TestCase
 {
-  protected function setUp()
+  protected function setUp(): void
   {
-    //
+    error_reporting(E_ALL);
   }
 
-  protected function tearDown()
+  protected function tearDown(): void
   {
     //
   }
