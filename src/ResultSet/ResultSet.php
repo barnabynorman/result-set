@@ -936,7 +936,7 @@ class ResultSet extends \ArrayObject {
   /**
    * Wrapper for uasort
    *
-   * @param Function $comparisonFunction to do sort
+   * @param callable $comparisonFunction to do sort
    *
    * @return ResultSet
    */
