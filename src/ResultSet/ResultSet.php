@@ -27,7 +27,7 @@ class ResultSet extends \ArrayObject {
   {
     if (is_array($data)) {
 
-      return new ResultSet($data);
+      return new static($data);
 
     } elseif (is_object($data)) {
 
@@ -41,7 +41,7 @@ class ResultSet extends \ArrayObject {
       $data = [$data];
     }
 
-    return new ResultSet($data);
+    return new static($data);
   }
 
   /**
@@ -67,7 +67,7 @@ class ResultSet extends \ArrayObject {
     if (is_integer($headings) && $headings > 0) {
 
       if ($headings >= count ($csvFile)) {
-        return new ResultSet([]);
+        return new static([]);
       }
 
       for ($rowCount = 0; $rowCount < $headings; $rowCount++) {
@@ -98,10 +98,10 @@ class ResultSet extends \ArrayObject {
           $record[$fieldName] = trim($cols[$id]);
         }
       }
-      $items[] = new ResultSet($record);
+      $items[] = new static($record);
     }
 
-    return new ResultSet($items);
+    return new static($items);
   }
 
   /**
@@ -129,7 +129,7 @@ class ResultSet extends \ArrayObject {
     $results = [];
 
     if ((!is_array($andClauses)) || (count($andClauses) == 0)) {
-      return new ResultSet([]);
+      return new static([]);
     }
 
     foreach($this as $item) {
@@ -147,7 +147,7 @@ class ResultSet extends \ArrayObject {
       }
     }
 
-    return new ResultSet($results);
+    return new static($results);
   }
 
   /**
@@ -168,7 +168,7 @@ class ResultSet extends \ArrayObject {
     $results = [];
 
     if ((!is_array($orClauses)) || (count($orClauses) == 0)) {
-      return new ResultSet([]);
+      return new static([]);
     }
 
     foreach($this as $item) {
@@ -186,7 +186,7 @@ class ResultSet extends \ArrayObject {
       }
     }
 
-    return new ResultSet($results);
+    return new static($results);
   }
 
   /**
@@ -211,7 +211,7 @@ class ResultSet extends \ArrayObject {
       }
     }
 
-    return new ResultSet($results);
+    return new static($results);
   }
 
   /**
@@ -229,19 +229,19 @@ class ResultSet extends \ArrayObject {
     $results = [];
 
     if ((!is_array($andClauses)) || (count($andClauses) == 0)) {
-      return new ResultSet([]);
+      return new static([]);
     }
 
     foreach($this as $item) {
       $fieldValue = static::getItemFieldValue($item, $field);
-      $testResult = ResultSet::getInstance($fieldValue)->where($andClauses);
+      $testResult = static::getInstance($fieldValue)->where($andClauses);
 
       if ($testResult->count() > 0) {
         $results[] = $item;
       }
     }
 
-    return new ResultSet($results);
+    return new static($results);
   }
 
   /**
@@ -257,19 +257,19 @@ class ResultSet extends \ArrayObject {
     $results = [];
 
     if ((!is_array($andClauses)) || (count($andClauses) == 0)) {
-      return new ResultSet([]);
+      return new static([]);
     }
 
     foreach($this as $item) {
       $fieldValue = static::getItemFieldValue($item, $field);
-      $testResult = ResultSet::getInstance([$fieldValue])->where($andClauses);
+      $testResult = static::getInstance([$fieldValue])->where($andClauses);
 
       if ($testResult->count() > 0) {
         $results[] = $item;
       }
     }
 
-    return new ResultSet($results);
+    return new static($results);
   }
 
   /**
@@ -297,7 +297,7 @@ class ResultSet extends \ArrayObject {
       }
     }
 
-    return new ResultSet(array_values($results));
+    return new static(array_values($results));
   }
 
   /**
@@ -322,7 +322,7 @@ class ResultSet extends \ArrayObject {
       }
     }
 
-    return new ResultSet($results);
+    return new static($results);
   }
 
   /**
@@ -339,14 +339,14 @@ class ResultSet extends \ArrayObject {
 
     foreach($this as $key => $item) {
       $fieldValue = static::getItemFieldValue($item, $fieldName);
-      $childCount = ResultSet::getInstance($fieldValue)->like($orClauses)->count();
+      $childCount = static::getInstance($fieldValue)->like($orClauses)->count();
 
       if ($childCount > 0) {
         $results[] = $item;
       }
     }
 
-    return new ResultSet($results);
+    return new static($results);
   }
 
   /**
@@ -366,7 +366,7 @@ class ResultSet extends \ArrayObject {
       }
     }
 
-    return new ResultSet(array_values($results));
+    return new static(array_values($results));
   }
 
   /**
@@ -382,7 +382,7 @@ class ResultSet extends \ArrayObject {
     $results = [];
 
     if ((!is_array($andClauses)) || (count($andClauses) == 0)) {
-      return new ResultSet([]);
+      return new static([]);
     }
 
     foreach($this as $item) {
@@ -400,7 +400,7 @@ class ResultSet extends \ArrayObject {
       }
     }
 
-    return new ResultSet($results);
+    return new static($results);
   }
 
   /**
@@ -416,7 +416,7 @@ class ResultSet extends \ArrayObject {
     $results = [];
 
     if ((!is_array($andClauses)) || (count($andClauses) == 0)) {
-      return new ResultSet([]);
+      return new static([]);
     }
 
     foreach($this as $item) {
@@ -434,7 +434,7 @@ class ResultSet extends \ArrayObject {
       }
     }
 
-    return new ResultSet($results);
+    return new static($results);
   }
 
   /**
@@ -454,14 +454,14 @@ class ResultSet extends \ArrayObject {
           $results[] = $item;
         }
       } else {
-        $childSearchCount = ResultSet::getInstance($item)->search($searchPhrase)->count();
+        $childSearchCount = static::getInstance($item)->search($searchPhrase)->count();
         if ($childSearchCount > 0) {
           $results[] = $item;
         }
       }
     }
 
-    return new ResultSet($results);
+    return new static($results);
   }
 
   /**
@@ -495,7 +495,7 @@ class ResultSet extends \ArrayObject {
       $result[] = $item;
     }
 
-    return ResultSet::getInstance($result);
+    return static::getInstance($result);
   }
 
   /**
@@ -515,7 +515,7 @@ class ResultSet extends \ArrayObject {
       $results[$fieldValue][] = $item;
     }
 
-    return new ResultSet($results);
+    return new static($results);
   }
 
   /**
@@ -538,7 +538,7 @@ class ResultSet extends \ArrayObject {
       $results[$fieldValue][] = $item;
     }
 
-    return new ResultSet($results);
+    return new static($results);
   }
 
   /**
@@ -558,7 +558,7 @@ class ResultSet extends \ArrayObject {
       $fieldValues[] = $value;
     }
 
-    return new ResultSet($fieldValues);
+    return new static($fieldValues);
   }
 
   /**
@@ -596,7 +596,7 @@ class ResultSet extends \ArrayObject {
       $results[] = $justFieldsItem;
     }
 
-    return new ResultSet($results);
+    return new static($results);
   }
 
   /**
@@ -630,7 +630,7 @@ class ResultSet extends \ArrayObject {
       $results[] = $justFieldsItem;
     }
 
-    return new ResultSet($results);
+    return new static($results);
   }
 
   /**
@@ -646,7 +646,7 @@ class ResultSet extends \ArrayObject {
   public function leftOuterJoin($joinData, $newField, $andClauses)
   {
     $results = [];
-    $joinDataRs = ResultSet::getInstance($joinData);
+    $joinDataRs = static::getInstance($joinData);
 
     foreach ($this as $item) {
       $joinClauses = [];
@@ -661,7 +661,7 @@ class ResultSet extends \ArrayObject {
       $results[] = $item;
     }
 
-    return new ResultSet($results);
+    return new static($results);
   }
 
   /**
@@ -680,7 +680,7 @@ class ResultSet extends \ArrayObject {
   public function innerJoin($joinData, $newField, $andClauses)
   {
     $results = [];
-    $joinDataRs = ResultSet::getInstance($joinData);
+    $joinDataRs = static::getInstance($joinData);
 
     foreach ($this as $item) {
       $joinClauses = [];
@@ -696,7 +696,7 @@ class ResultSet extends \ArrayObject {
       }
     }
 
-    return new ResultSet($results);
+    return new static($results);
   }
 
   /**
@@ -753,7 +753,7 @@ class ResultSet extends \ArrayObject {
   {
     if (strlen($field) == 0) {
       $unique = array_unique($this->toArray());
-      return new ResultSet($unique);
+      return new static($unique);
     }
 
     $results = [];
@@ -765,7 +765,7 @@ class ResultSet extends \ArrayObject {
       }
     }
 
-    return new ResultSet(array_values($results));
+    return new static(array_values($results));
   }
 
   /**
@@ -807,7 +807,7 @@ class ResultSet extends \ArrayObject {
             $results[$fieldValue] = $item;
           }
         } else {
-          return new ResultSet([]);
+          return new static([]);
         }
       }
     }
@@ -843,7 +843,7 @@ class ResultSet extends \ArrayObject {
       $count++;
     }
 
-    return new ResultSet($results);
+    return new static($results);
   }
 
   /**
@@ -910,7 +910,7 @@ class ResultSet extends \ArrayObject {
       }
     }
 
-    return new ResultSet($results);
+    return new static($results);
   }
 
   /**
@@ -998,7 +998,7 @@ class ResultSet extends \ArrayObject {
   public function leftOuterJoinFirst($joinData, $newField, $andClauses)
   {
     $results = [];
-    $joinDataRs = ResultSet::getInstance($joinData);
+    $joinDataRs = static::getInstance($joinData);
 
     foreach ($this as $item) {
       $joinClauses = [];
@@ -1016,7 +1016,7 @@ class ResultSet extends \ArrayObject {
       $results[] = $item;
     }
 
-    return new ResultSet($results);
+    return new static($results);
   }
 
   /**
@@ -1038,7 +1038,7 @@ class ResultSet extends \ArrayObject {
       $results[$keyName] = $item;
     }
 
-    return new ResultSet($results);
+    return new static($results);
   }
 
   /**
@@ -1064,7 +1064,7 @@ class ResultSet extends \ArrayObject {
       $results[] = $this[$id];
     }
 
-    return new ResultSet($results);
+    return new static($results);
   }
 
   /**
@@ -1100,7 +1100,7 @@ class ResultSet extends \ArrayObject {
       }
     }
 
-    return new ResultSet($results);
+    return new static($results);
   }
 
   /**
@@ -1129,7 +1129,7 @@ class ResultSet extends \ArrayObject {
       }
     }
 
-    return new ResultSet($results);
+    return new static($results);
   }
 
   /**
@@ -1143,7 +1143,7 @@ class ResultSet extends \ArrayObject {
   public function joinFields($joinData, $newFields, $andClauses)
   {
     $results = [];
-    $joinDataRs = ResultSet::getInstance($joinData);
+    $joinDataRs = static::getInstance($joinData);
 
     foreach ($this as $item) {
       $joinClauses = [];
@@ -1165,7 +1165,7 @@ class ResultSet extends \ArrayObject {
       }
     }
 
-    return new ResultSet($results);
+    return new static($results);
   }
 
   /**
@@ -1186,7 +1186,7 @@ class ResultSet extends \ArrayObject {
       $fieldValues[] = $childValue;
     }
 
-    return new ResultSet($fieldValues);
+    return new static($fieldValues);
   }
 
 }
