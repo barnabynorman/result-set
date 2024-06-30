@@ -19,11 +19,5 @@
     "psr-4": {
       "Tests\\": "tests/"
     }
-  },
-  "scripts": {
-      "test": [
-          "@phpunit"
-      ],
-      "phpunit": "phpunit --verbose --coverage-clover=coverage.xml"
   }
 }
