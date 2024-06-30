@@ -712,7 +712,7 @@ class ResultSet extends \ArrayObject {
   /**
    * Degrades ResultSet into JSON string
    *
-   * @return JSON
+   * @return string JSON
    */
   public function toJson()
   {
@@ -725,7 +725,7 @@ class ResultSet extends \ArrayObject {
    * with id provided by the 'id' field
    * which can be optionally specified
    *
-   * @return JSON
+   * @return string JSON
    */
   public function toJsonRecords($id = 'id')
   {
