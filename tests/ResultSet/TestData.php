@@ -10,6 +10,9 @@ class GroceryItem {
     public $id;
     public $name;
     public $typeId;
+    public $colour;
+    public $items;
+    public $type;
 
     public function __construct($data) {
       $this->id = $data['id'];
@@ -26,6 +29,8 @@ class GroceryType {
 
     public $id;
     public $name;
+    public $colour;
+    public $items;
 
     public function __construct($data) {
       $this->id = $data['type_id'];
@@ -58,6 +63,13 @@ class NumberObj {
  * Person class
  */
 class Person {
+    public $id;
+    public $firstname;
+    public $lastname;
+    public $height;
+    public $eye_colour;
+    public $pb;
+
   public function __construct($data) {
     $this->id = $data['id'];
     $this->firstname = $data['firstname'];
@@ -69,6 +81,11 @@ class Person {
  * Defines profile data to extend person
  */
 class Profile {
+  public $person_id;
+  public $height;
+  public $eye_colour;
+  public $pb;
+
   public function __construct($data) {
     $this->person_id = $data['person_id'];
     $this->height = $data['height'];
