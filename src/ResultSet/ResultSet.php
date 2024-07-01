@@ -45,6 +45,24 @@ class ResultSet extends \ArrayObject {
   }
 
   /**
+   * Flatten any data into a searchable string
+   *
+   * @param mixed $data
+   *
+   * @return string
+   */
+  public static function convertToString($data)
+  {
+    if (is_string($data)) {
+        return $data;
+    } elseif (is_array($data) || is_object($data)) {
+        return json_encode($data);
+    } else {
+        return (string) $data;
+    }
+  }
+
+  /**
    * Creates a loaded instance of ResultSet based on data in
    * the CSV file specified in the filePath parameter
    *
@@ -440,22 +458,24 @@ class ResultSet extends \ArrayObject {
   /**
    * Searches all fields in all elements
    *
-   * @param String phrase to search for
+   * @param string phrase to search for
+   * @param boolean option to search case sensitive - deafault false
    *
    * @return ResultSet
    */
-  public function search($searchPhrase)
+  public function search($searchPhrase, $caseSensitive = false)
   {
     $results = [];
 
     foreach($this as $item) {
-      if (is_scalar($item)) {
-        if (($item == $searchPhrase) || (stripos((string)$item, (string)$searchPhrase) !== FALSE)) {
+      $data = static::convertToString($item);
+
+      if ($caseSensitive) {
+        if (strpos($data, $searchPhrase) !== false) {
           $results[] = $item;
         }
       } else {
-        $childSearchCount = static::getInstance($item)->search($searchPhrase)->count();
-        if ($childSearchCount > 0) {
+        if (stripos($data, $searchPhrase) !== false) {
           $results[] = $item;
         }
       }
