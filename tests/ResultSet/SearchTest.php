@@ -44,4 +44,16 @@ class SearchTest extends AbstractTestCase {
     $this->assertEquals($result[0]->name, 'Beer');
   }
 
+  public function testCaseSensitiveSearch()
+  {
+    $groceryList = TestData::getItemsWithTypeFieldJoined();
+    $groceryListRs = new ResultSet($groceryList);
+
+    $caseSentitive = true;
+    $result = $groceryListRs->search('beer', $caseSentitive);
+
+    $this->assertInstanceOfResultSet($result);
+    $this->assertEquals(count($result), 0);
+  }
+
 }
