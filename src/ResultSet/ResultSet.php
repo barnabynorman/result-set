@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ResultSet;
 
 class ResultSet extends \ArrayObject {
@@ -101,7 +103,7 @@ class ResultSet extends \ArrayObject {
     }
 
     foreach ($fields as $id => $name) {
-      $name = trim(str_replace(' ', '_', $name));
+      $name = trim(str_replace(' ', '_', (string)$name));
       if (strlen($name) > 0) {
         $fields[$id] = $name;
       }
@@ -309,7 +311,7 @@ class ResultSet extends \ArrayObject {
       foreach($this as $key => $item) {
         $fieldValue = static::getItemFieldValue($item, $field);
 
-        if ((strlen($value)) && (stripos((string)$fieldValue, (string)$value) !== FALSE)) {
+        if ((strlen((string)$value)) && (stripos((string)$fieldValue, (string)$value) !== FALSE)) {
           $results[$key] = $item;
         }
       }
@@ -495,24 +497,21 @@ class ResultSet extends \ArrayObject {
    */
   public function orderBy($order, $subOrder = '')
   {
-    if (strlen($subOrder) > 0) {
-      $this->uasort(function ($a, $b) use($order, $subOrder) {
-        if ($a->$order == $b->$order) {
-          return $a->$subOrder <=> $b->$subOrder;
+    $this->uasort(function ($a, $b) use ($order, $subOrder) {
+        $a_order = static::getItemFieldValue($a, $order);
+        $b_order = static::getItemFieldValue($b, $order);
+
+        if ($a_order == $b_order && strlen($subOrder) > 0) {
+            $a_subOrder = static::getItemFieldValue($a, $subOrder);
+            $b_subOrder = static::getItemFieldValue($b, $subOrder);
+            return $a_subOrder <=> $b_subOrder;
         }
-        return strcmp($a->$order, $b->$order);
-      });
-    } else {
-      $this->uasort(function ($a, $b) use($order) {
-        $testa = static::getItemFieldValue($a, $order);
-        $testb = static::getItemFieldValue($b, $order);
-        return $testa <=> $testb;
-      });
-    }
+        return $a_order <=> $b_order;
+    });
 
     $result = [];
     foreach ($this as $item) {
-      $result[] = $item;
+        $result[] = $item;
     }
 
     return static::getInstance($result);
@@ -805,7 +804,7 @@ class ResultSet extends \ArrayObject {
   public function uniqueFields($fields = '', $onErrorStop = FALSE)
   {
     if (!is_array($fields) && strlen($fields) == 0) {
-      die("uniqueFields - Please specify at least one field\n");
+      throw new \Exception('uniqueFields - Please specify at least one field');
     }
 
     if (!is_array($fields)) {
@@ -819,8 +818,7 @@ class ResultSet extends \ArrayObject {
         $fieldValue = static::getItemFieldValue($item, $field);
         if (is_scalar($fieldValue)) {
           if (isset($results[$fieldValue]) && $onErrorStop) {
-            echo sprintf("Duplicate: field: %s with value: %s\n", $field, $fieldValue);
-            die;
+            throw new \Exception(sprintf("Duplicate: field: %s with value: %s", $field, $fieldValue));
           } elseif (isset($results[$fieldValue])) {
             unset($this[$key]);
           } else {
