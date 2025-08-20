@@ -76,7 +76,7 @@ class ResultSet extends \ArrayObject {
   public static function getFromCsvFile ($filePath, $headings = 1) {
     $csvFile = [];
     if (($handle = fopen($filePath, 'r')) !== FALSE) {
-      while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+      while (($data = fgetcsv($handle, 1000, ",", "\\")) !== FALSE) {
         $csvFile[] = $data;
       }
 
