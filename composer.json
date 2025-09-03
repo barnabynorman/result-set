@@ -5,14 +5,15 @@
   "license": "MIT",
   "minimum-stability": "dev",
   "require": {
-    "php": "^7.3||^8.0"
+    "php": "^7.3||^8.0||^8.3"
   },
     "require-dev": {
       "phpunit/phpunit": "^9.0"
   },
   "autoload": {
     "psr-4": {
-      "ResultSet\\": "src/ResultSet/"
+      "ResultSet\\": "src/ResultSet/",
+      "ResultSet\\Concerns\\": "src/ResultSet/Concerns/"
     }
   },
   "autoload-dev": {

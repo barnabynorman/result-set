@@ -11,9 +11,9 @@ export DEBIAN_FRONTEND=noninteractive
 # Update the package list
 sudo apt-get update
 
-# Install PHP and Composer. We are using PHP 8.2 as a good starting point.
+# Install PHP and Composer. We are using PHP 8.3 as a good starting point.
 # You may need to change this version to match your local development environment.
-sudo apt-get install -y php8.2 php8.2-cli php8.2-mbstring php8.2-xml php8.2-curl unzip
+sudo apt-get install -y php8.3 php8.3-cli php8.3-mbstring php8.3-xml php8.3-curl unzip
 
 # Install Composer
 echo "--- Installing Composer ---"
