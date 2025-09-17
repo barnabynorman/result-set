@@ -28,7 +28,7 @@ trait Joins
             }
 
             $joined = $joinDataRs->where($joinClauses);
-            $item->$newField = $joined;
+            $item = static::setItemFieldValue($item, $newField, $joined);
 
             $results[] = $item;
         }
@@ -134,7 +134,9 @@ trait Joins
             $joined = $joinDataRs->where($joinClauses);
 
             if ($joined->count() > 0) {
-                $item->$newField = $joined->first();
+                $item = static::setItemFieldValue($item, $newField, $joined->first());
+            } else {
+                $item = static::setItemFieldValue($item, $newField, null);
             }
 
             $results[] = $item;
