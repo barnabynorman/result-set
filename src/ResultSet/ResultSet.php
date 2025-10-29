@@ -15,6 +15,8 @@ use ResultSet\Concerns\Sorting\Ordering;
 use ResultSet\Concerns\Aggregating\Grouping;
 use ResultSet\Concerns\Serialization\Output;
 use ResultSet\Concerns\Operations\Ops;
+use ResultSet\Concerns\Sorting\OrderingExtended;
+use ResultSet\Concerns\Operations\OperationsExtended;
 
 class ResultSet extends \ArrayObject {
 
@@ -28,7 +30,9 @@ class ResultSet extends \ArrayObject {
         Ordering,
         Grouping,
         Output,
-        Ops;
+        Ops,
+        OrderingExtended,
+        OperationsExtended;
 
   /**
    * Create an instance of ResultSet
